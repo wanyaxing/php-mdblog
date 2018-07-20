@@ -54,15 +54,15 @@ $(function(){
             });
         }
 
-        // body禁止滚动
-        var scrollTop = document.scrollingElement.scrollTop;
-        var bodyWidth = $('body').width();
-        $('body').addClass('body-prevent-class').data('scrollTop',scrollTop).css({'top':-scrollTop + 'px','width':bodyWidth+'px'});
-
         // 记录当前位置（后面需要归位）
         var position = $this.offset();
         position.top = position.top - (document.body.scrollTop + document.documentElement.scrollTop);
         $this.data('position',position);
+
+        // body禁止滚动
+        var scrollTop = document.scrollingElement.scrollTop;
+        var bodyWidth = $('body').width();
+        $('body').addClass('body-prevent-class').data('scrollTop',scrollTop).css({'top':-scrollTop + 'px','width':bodyWidth+'px'});
 
         // 瞬间切换到移动前位置（绝对定位后，移动到之前的位置，模拟成位置不变的样子）
         $this.addClass('item_bg_fixed').addClass('item_showing');

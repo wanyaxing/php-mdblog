@@ -43,7 +43,7 @@
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/animejs/2.2.0/anime.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.2"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.2"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.3"></script>
 <?php include './footer.php'; ?>
 </body>
 </html>
