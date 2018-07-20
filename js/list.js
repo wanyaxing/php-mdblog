@@ -10,7 +10,7 @@ $(function(){
         var link = $this.attr('href');
         $.get(link).then(function(response){
             $this.fadeOut(function(){
-                if (_hmt){_hmt.push(['_trackPageview', link]);}
+                if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', link]);}
                 $this.remove();
                 $('#blog_list').append(response);
             });
@@ -144,7 +144,7 @@ $(function(){
                 $bodyli.css('height','auto');
                 $bodyli.removeClass('anime');
                 $this.removeClass('item_showing')
-                if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
+                if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
     }
@@ -191,7 +191,7 @@ $(function(){
                 //  body 恢复滚动
                 $('body').removeClass('body-prevent-class').css({'top':'','width':''});
                 document.scrollingElement.scrollTop =  $('body').data('scrollTop');
-                if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
+                if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
     }

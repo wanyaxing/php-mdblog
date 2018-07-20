@@ -52,9 +52,9 @@
 
     $title = $item['fTitle'];
 ?>
-<?php include './header.php'; ?>
+<?php include __dir__ . '/header.php'; ?>
 <body>
-    <?php include './top.php'; ?>
+    <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
         <div id="blog_detail">
             <div class="item_li item_amex item_detail" >
@@ -68,11 +68,11 @@
                 </div>
             </div>
         </div>
-        <?php include './side.php'; ?>
+        <?php include __dir__ . '/side.php'; ?>
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib//jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.5"></script>
-<?php include './footer.php'; ?>
+<?php include __dir__ . '/footer.php'; ?>
 </body>
 </html>

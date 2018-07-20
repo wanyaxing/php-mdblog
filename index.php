@@ -34,7 +34,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     $requestActions = explode('/',trim($relativePath,'/'));
 
     // 对操作数组进行分析
-    if (is_numeric($requestActions[0]) || $requestActions[0]=='')
+    if (is_numeric($requestActions[0]) || $requestActions[0]=='' || $requestActions[0]=='index.php')
     {
         include MDBLOG_ROOT_PATH.'/includes/list.php';
     }

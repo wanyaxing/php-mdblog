@@ -14,9 +14,9 @@
     $title = MDBLOG_TITLE;
 ?>
 <?php if (!Utility::isAjax()): ?>
-<?php include './header.php'; ?>
+<?php include __dir__ . '/header.php'; ?>
 <body>
-    <?php include './top.php'; ?>
+    <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
     <div id="blog_list">
 <?php endif ?>
@@ -38,13 +38,13 @@
         <?php endif ?>
 <?php if (!Utility::isAjax()): ?>
     </div>
-    <?php include './side.php'; ?>
+    <?php include __dir__ . '/side.php'; ?>
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/animejs/2.2.0/anime.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.5"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.5"></script>
-<?php include './footer.php'; ?>
+<?php include __dir__ . '/footer.php'; ?>
 </body>
 </html>
 <?php endif ?>
