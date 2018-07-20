@@ -1,0 +1,11 @@
+#### 启动重写引擎
+RewriteEngine On
+# 如果请求符合下列规则,则忽略转发
+RewriteRule ^index\.php$ - [L]
+## 如果请求的文件存在，则忽略重写规则
+RewriteCond %{REQUEST_FILENAME} !-f
+#执行重写指向 (注意：上文没有指定RewriteBase，所以，此处默认是相对本文件的路径)
+RewriteRule . index.php [L]
+
+
+
