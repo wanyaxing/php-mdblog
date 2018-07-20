@@ -7,8 +7,8 @@ error_reporting(-1);                    //打印出所有的 错误信息
 date_default_timezone_set('Asia/Shanghai');//设定时区
 
 
-    include(__dir__.'/'.'config.php');
-    include(__dir__.'/lib/Utility.php');
+    include(__dir__.'/includes/config.php');
+    include(__dir__.'/includes/lib/Utility.php');
 
     // 博客所在根目录
     define('MDBLOG_ROOT_PATH',__dir__);
@@ -16,7 +16,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     define('MDBLOG_ROOT_URI',preg_replace ("/\/[^\/]*$/", '', $_SERVER['PHP_SELF']));
 
     // 博客所在URL根路径（比如xxx.com/blog)
-    if (!defined('MDBLOG_CDN_HOST') || AXAPI_DEPLOY_STATUS==1)
+    if (!defined('MDBLOG_CDN_HOST') || MDBLOG_DEPLOY_STATUS==1)
     {// 相对路径
         define('MDBLOG_CDN_URL','.' );
     }
@@ -36,14 +36,14 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     // 对操作数组进行分析
     if (is_numeric($requestActions[0]) || $requestActions[0]=='')
     {
-        include __dir__.'/list.php';
+        include MDBLOG_ROOT_PATH.'/includes/list.php';
     }
     else if (preg_match('/^.*\.html$/',$requestActions[0]))
     {
-        include __dir__.'/detail.php';
+        include MDBLOG_ROOT_PATH.'/includes/detail.php';
     }
     else
     {
-        include __dir__.'/404.php';
+        include MDBLOG_ROOT_PATH.'/includes/404.php';
     }
 
