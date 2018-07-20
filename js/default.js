@@ -4,4 +4,3 @@ $(function(){
     });
 });
 
-var bodyNice = $('body').niceScroll();

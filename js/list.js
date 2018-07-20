@@ -35,34 +35,45 @@ $(function(){
         }
 
         var $this = $(this).closest('.item_bg');
-        if ($this.hasClass('item_fixed'))
+        var $itemli = $this.closest('.item_li');
+        var $bodyli = $this.find('.item_body');
+        var $content = $this.find('.content');
+
+        if ($this.hasClass('item_bg_fixed'))
         {
-            return ;
+            return false;
         }
 
-
+        // pjax 加载数据
         var link = $this.find('.name').attr('href');
         window.history.replaceState(null, $this.find('.name').text(), link);
-        if (!$this.find('.content').hasClass('content_load'))
+        if (!$content.hasClass('content_load'))
         {
             $.get(link).then(function(response){
-                $this.find('.content').html(response).addClass('content_load');
+                $content.html(response).addClass('content_load');
             });
         }
 
-        bodyNice.locked = true;
+        // body禁止滚动
+        var scrollTop = document.scrollingElement.scrollTop;
+        var bodyWidth = $('body').width();
+        $('body').addClass('body-prevent-class').data('scrollTop',scrollTop).css({'top':-scrollTop + 'px','width':bodyWidth+'px'});
 
+        // 记录当前位置（后面需要归位）
         var position = $this.offset();
-        // position.top = position.top - (document.body.scrollTop + document.documentElement.scrollTop);
-        position.top = position.top - bodyNice.scrollTop();
+        position.top = position.top - (document.body.scrollTop + document.documentElement.scrollTop);
         $this.data('position',position);
 
-        $this.addClass('item_fixed').css({'top':position.top+'px'}).addClass('anime').addClass('item_showing');
+        // 瞬间切换到移动前位置（绝对定位后，移动到之前的位置，模拟成位置不变的样子）
+        $this.addClass('item_bg_fixed').addClass('item_showing');
+        $bodyli.css({'top':position.top+'px','left':position.left+'px','width':$itemli.width()+'px','height':$itemli.height()+'px'})
+                .addClass('anime');
         $this.find('.description').hide();
         $this.find('.content').fadeIn();
 
 
-        var _this = $this[0];
+        //开始移动
+        var _this = $bodyli[0];
         anime.remove(_this);
         anime({
             targets: _this,
@@ -88,15 +99,13 @@ $(function(){
             // rotate: 360,
             duration:800,
             complete: function(anim) {
-                var scrollTop = document.scrollingElement.scrollTop;
-                $('body').addClass('body-prevent-class').data('scrollTop',scrollTop).css('top',-scrollTop + 'px');
-                $this.removeClass('anime').removeClass('item_showing');
-                $this.niceScroll({
-                    horizrailenabled:false,
-                });
+                $bodyli.css('height','auto');
+                $bodyli.removeClass('anime');
+                $this.removeClass('item_showing')
                 if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
+
         e.preventDefault();e.stopPropagation();
         return false;
     });
@@ -105,17 +114,20 @@ $(function(){
     /*关闭详情*/
     $('#blog_list').on('click','.btn_close',function(e){
         var $this = $(this).closest('.item_bg');
-        if (!$this.hasClass('item_fixed'))
+        var $itemli = $this.closest('.item_li');
+        var $bodyli = $this.find('.item_body');
+        var $content = $this.find('.content');
+
+        if (!$this.hasClass('item_bg_fixed'))
         {
-            return ;
+            return false;
         }
 
         window.history.replaceState(null, titleThisPage, linkThisPage);
 
-
-        $this.addClass('anime').addClass('item_hiding');
-        $('body').removeClass('body-prevent-class').css('top','0px');
-        document.scrollingElement.scrollTop =  $('body').data('scrollTop');
+        // 准备移动
+        $this.addClass('item_hiding')
+        $bodyli.addClass('anime');
         $this.find('.content').hide();
         $this.find('.description').fadeIn();
         $this.css({
@@ -123,27 +135,28 @@ $(function(){
         var position = $this.data('position');
 
 
-        var _this = $this[0];
+        var _this = $bodyli[0];
         anime.remove(_this);
         anime({
             targets: _this,
             scale: 1,
             top:(position.top)+'px',
             left:(position.left)+'px',
-            width:$this.closest('.item_li').width()+'px',
-            height: '256px',
+            width:$itemli.width()+'px',
+            height:$itemli.height()+'px',
             duration:500,
             complete: function(anim) {
-                $this.removeClass('item_fixed').removeClass('item_hiding');
-                $this.css({
+                $this.removeClass('item_bg_fixed').removeClass('item_hiding');
+                $bodyli.removeClass('anime');
+                $bodyli.css({
                             'top':'',
                             'left':'',
                             'width':'',
                             'height':'',
                         });
-                $this.removeClass('anime');
-                $this.getNiceScroll().remove();
-                bodyNice.locked = false;
+                //  body 恢复滚动
+                $('body').removeClass('body-prevent-class').css({'top':'','width':''});
+                document.scrollingElement.scrollTop =  $('body').data('scrollTop');
                 if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
@@ -166,7 +179,6 @@ $(function(){
                 if (_hmt){_hmt.push(['_trackPageview', link]);}
                 $this.remove();
                 $('#blog_list').append(response);
-                bodyNice.resize();
             });
         });
         e.preventDefault();e.stopPropagation();
