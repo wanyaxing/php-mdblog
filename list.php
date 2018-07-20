@@ -1,6 +1,6 @@
 <?php
     $page     = is_numeric($requestActions[0])?$requestActions[0]:1;
-    $size     = 3;
+    $size     = MDBLOG_PAGE_SIZE;
 
     $dirList   = array_reverse(glob(__dir__.'/post/*',GLOB_ONLYDIR));
 
@@ -42,8 +42,8 @@
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/animejs/2.2.0/anime.min.js"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.4"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.4"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.5"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.5"></script>
 <?php include './footer.php'; ?>
 </body>
 </html>
