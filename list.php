@@ -1,6 +1,6 @@
 <?php
     $page     = is_numeric($requestActions[0])?$requestActions[0]:1;
-    $size     = MDBLOG_PAGE_SIZE;
+    $size     = 3;
 
     $dirList   = array_reverse(glob(__dir__.'/post/*',GLOB_ONLYDIR));
 
@@ -22,7 +22,7 @@
 <?php endif ?>
         <?php foreach ($items as $item): ?>
             <div class="item_li item_amex">
-                <div class="item_bg">
+                <div class="item_bg" id="item_<?= md5($item['link'])  ?>">
                     <div class="item_body" >
                         <a class="name" href="<?= $item['link'] ?>"><?= $item['fTitle'] ?></a>
                         <div class="time"><?= $item['fTimeLocal'] ?></div>
@@ -42,8 +42,8 @@
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/animejs/2.2.0/anime.min.js"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.2"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.3"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0720.4"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.js?v=0720.4"></script>
 <?php include './footer.php'; ?>
 </body>
 </html>

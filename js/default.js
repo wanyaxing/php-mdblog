@@ -4,3 +4,6 @@ $(function(){
     });
 });
 
+window.onpopstate = function(event) {
+    window.history.go(0);
+}

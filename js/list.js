@@ -1,14 +1,25 @@
 $(function(){
-    // $('#blog_list').on('wheel mousewheel','.item_bg',function(){
-    //     anime.remove(this);
-    //     anime({
-    //         targets: this,
-    //         scale: [
-    //             { value: 0.95, duration: 250 },
-    //             { value: 1, duration: 250 }
-    //         ],
-    //     });
-    // });
+    /*加载更多*/
+    $('#blog_list').on('click','.btn_loadmore',function(e){
+        var $this= $(this);
+        if ($this.hasClass('loading'))
+        {
+            return false;
+        }
+        $this.addClass('loading').html('加载中...');
+        var link = $this.attr('href');
+        $.get(link).then(function(response){
+            $this.fadeOut(function(){
+                if (_hmt){_hmt.push(['_trackPageview', link]);}
+                $this.remove();
+                $('#blog_list').append(response);
+            });
+        });
+        e.preventDefault();e.stopPropagation();
+        return false;
+    });
+
+
     var isPjaxEnable = window.history && window.history.pushState && window.history.replaceState &&
             // pushState isn't reliable on iOS until 5.
             !navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]\D|WebApps\/.+CFNetwork)/);
@@ -17,24 +28,42 @@ $(function(){
     var linkThisPage = window.location.href;
     var titleThisPage = $('title').text();
 
-    /*禁止标签超链接*/
-    $('#blog_list').on('click','.name',function(e){
-        if (isPjaxEnable)
+    var state = {
+            id:(new Date).getTime(),
+            url: window.location.href,
+            title: document.title,
+            isDetail: 0,
+        };
+    window.history.replaceState(state, state.title, state.url);
+    window.onpopstate = function(event) {
+        if (event.state && event.state.id)
         {
-            e.preventDefault();e.stopPropagation();
-            return false;
+            if (event.state.isDetail)
+            {
+                var $itemNode = $('#'+event.state.id);
+                if ($itemNode.length>0)
+                {
+                    itemShow($itemNode,0);
+                }
+                else
+                {
+                    window.history.go(0);
+                }
+            }
+            else
+            {
+                itemHide();
+            }
+            if (event.state.title)
+            {
+                document.title = event.state.title;
+            }
         }
-    });
+        return false;
+    };
 
-
-    /*展开详情*/
-    $('#blog_list').on('click','.item_bg,.name',function(e){
-        if (!isPjaxEnable)
-        {
-            return true;
-        }
-
-        var $this = $(this).closest('.item_bg');
+    function itemShow(itemNode,isPushState){
+        var $this = $(itemNode).closest('.item_bg');
         var $itemli = $this.closest('.item_li');
         var $bodyli = $this.find('.item_body');
         var $content = $this.find('.content');
@@ -44,12 +73,25 @@ $(function(){
             return false;
         }
 
+        if (!$this.attr('id'))
+        {
+            $this.attr('id','item_'+(new Date).getTime());
+        }
         // pjax 加载数据
-        var link = $this.find('.name').attr('href');
-        window.history.replaceState(null, $this.find('.name').text(), link);
+        var state = {
+            id:$this.attr('id'),
+            url: $this.find('.name').attr('href'),
+            title: $this.find('.name').text(),
+            isDetail: 1,
+        };
+        if (isPushState)
+        {
+            window.history.pushState(state, state.title, state.url);
+            $('title').html(state.title);
+        }
         if (!$content.hasClass('content_load'))
         {
-            $.get(link).then(function(response){
+            $.get(state.url).then(function(response){
                 $content.html(response).addClass('content_load');
             });
         }
@@ -105,25 +147,17 @@ $(function(){
                 if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
+    }
 
-        e.preventDefault();e.stopPropagation();
-        return false;
-    });
-
-
-    /*关闭详情*/
-    $('#blog_list').on('click','.btn_close',function(e){
-        var $this = $(this).closest('.item_bg');
-        var $itemli = $this.closest('.item_li');
-        var $bodyli = $this.find('.item_body');
-        var $content = $this.find('.content');
-
+    function itemHide(){
+        var $this = $('.item_bg_fixed');
         if (!$this.hasClass('item_bg_fixed'))
         {
             return false;
         }
-
-        window.history.replaceState(null, titleThisPage, linkThisPage);
+        var $itemli = $this.closest('.item_li');
+        var $bodyli = $this.find('.item_body');
+        var $content = $this.find('.content');
 
         // 准备移动
         $this.addClass('item_hiding')
@@ -160,30 +194,24 @@ $(function(){
                 if (_hmt){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
+    }
+
+    /*展开详情*/
+    $('#blog_list').on('click','.item_bg,.name',function(e){
+        return itemShow(this,1);
         e.preventDefault();e.stopPropagation();
         return false;
     });
 
 
-    /*加载更多*/
-    $('#blog_list').on('click','.btn_loadmore',function(e){
-        var $this= $(this);
-        if ($this.hasClass('loading'))
-        {
-            return false;
-        }
-        $this.addClass('loading').html('加载中...');
-        var link = $this.attr('href');
-        $.get(link).then(function(response){
-            $this.fadeOut(function(){
-                if (_hmt){_hmt.push(['_trackPageview', link]);}
-                $this.remove();
-                $('#blog_list').append(response);
-            });
-        });
+    /*关闭详情*/
+    $('#blog_list').on('click','.btn_close',function(e){
+        window.history.go(-1);
         e.preventDefault();e.stopPropagation();
         return false;
     });
+
+
 
 
 });
