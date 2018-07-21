@@ -30,17 +30,14 @@
     $Parsedown = new Parsedown();
 
     $html = $Parsedown->text($content); # prints: <p>Hello <em>Parsedown</em>!</p>
-    if (defined('MDBLOG_CDN_HOST'))
-    {
-        // 转化相对文件路径为绝对的CND路径
-        $GLOBALS['detailKey'] = $detailKey;
-        $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
-            $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['detailKey'] .'/' . $matches[2]);
-            $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
-            $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
-            return $matches[1] . $imgFileUrl . $matches[3] ;
-        },$html);
-    }
+    // 转化相对当前文件路径为可访问的URL路径
+    $GLOBALS['detailKey'] = $detailKey;
+    $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
+        $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['detailKey'] .'/' . $matches[2]);
+        $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
+        $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
+        return $matches[1] . $imgFileUrl . $matches[3] ;
+    },$html);
 
     if (Utility::isAjax())
     {
