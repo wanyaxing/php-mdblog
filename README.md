@@ -3,6 +3,8 @@ A blog which write with markdown which supported by php.
 
 [demo](http://appjk.com/blog)
 
+![demo.gif](./post/20160816091230/demo.gif)
+
 ## 运行环境
 
 * 默认使用 `Apache+PHP` 的运行环境，使用 `.htaccess` 进行网址转换。

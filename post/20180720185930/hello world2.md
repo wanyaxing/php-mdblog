@@ -1,5 +1,3 @@
-## say hi.
+## say hi2.
 
 >A blog which write with markdown which supported by php.
-
-![demo.gif](./demo.gif)
