@@ -19,7 +19,7 @@
     }
     if (!isset($mdFile) || !file_exists($mdFile))
     {
-        include './404.php';
+        include __dir__ .  '/404.php';
         exit;
     }
 
