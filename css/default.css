@@ -302,14 +302,12 @@ ul, li {
     cursor: pointer;
 }
 
-
 #footer_body{
     text-align: center;
     color: rgb(169, 169, 169);
     text-decoration: none;
     font-size: small;
-    line-height: 80px;
-    height: 60px
+    padding: 20px 30px 10px;
 }
 /*----------------------------------*/
 
