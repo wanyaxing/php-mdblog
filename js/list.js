@@ -197,8 +197,8 @@ $(function(){
     }
 
     /*展开详情*/
-    $('#blog_list').on('click','.item_bg,.name',function(e){
-        return itemShow(this,1);
+    $('#blog_list').on('click','.description,.name',function(e){
+        itemShow(this,1);
         e.preventDefault();e.stopPropagation();
         return false;
     });
