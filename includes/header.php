@@ -14,5 +14,7 @@
 <meta name="format-detection" content="email=no">
 <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
 <link rel="stylesheet" type="text/css" href="<?=MDBLOG_CDN_URL?>/css/markdown/avenir-white.css">
-<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0720.2">
+<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0724.2">
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 </head>
