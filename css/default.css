@@ -30,9 +30,11 @@ body {
     touch-action: none;
 }
 
-a{
+a,a:active{
+    color: #0366d6;
     text-decoration: none;
 }
+
 
 div, ul, li {
     margin: 0;
