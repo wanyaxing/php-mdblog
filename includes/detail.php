@@ -64,7 +64,7 @@
                         <div class="name"><?= $item['fTitle'] ?></div>
                         <div class="time"><?= $item['fTimeLocal'] ?></div>
                         <!-- <div class="description"><?= $item['description'] ?></div> -->
-                        <div class="content"><?= $html ?></div>
+                        <div class="content markdown-body"><?= $html ?></div>
                     </div>
                 </div>
             </div>

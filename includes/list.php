@@ -27,7 +27,7 @@
                         <a class="name" href="<?= $item['link'] ?>"><?= $item['fTitle'] ?></a>
                         <div class="time"><?= $item['fTimeLocal'] ?></div>
                         <div class="description"><?= $item['description'] ?></div>
-                        <div class="content"></div>
+                        <div class="content markdown-body"></div>
                         <div class="btn_close">X</div>
                     </div>
                 </div>
