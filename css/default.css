@@ -31,16 +31,9 @@ body {
 }
 
 a{
-    color: #313131;
     text-decoration: none;
 }
-a:hover{
-    color:#313131;
-}
-a, a:visited{
-    background: none;
-    color: #313131;;
-}
+
 div, ul, li {
     margin: 0;
     padding: 0;
