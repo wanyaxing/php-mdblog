@@ -6,11 +6,19 @@
     $content = '';
 
     $detailKey = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
-    if (is_numeric($detailKey))
+    if (Utility::strtotime($detailKey))
     {
         foreach (glob(MDBLOG_ROOT_PATH.'/post/'.$detailKey.'/*.md') as $_file) {
             $mdFile = $_file;
             break;
+        }
+        if (isset($mdFile))
+        {
+            $mdInfo = Utility::getInfoOfFile($mdFile);
+            if ($detailKey!=$mdInfo['fTime'])
+            {//只允许使用 fTime 作为 url 关键字
+                $mdFile = null;
+            }
         }
     }
     else

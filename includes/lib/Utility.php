@@ -29,7 +29,7 @@ class Utility{
             {
                 $p_time = substr($p_time,0,10);
             }
-            $p_time = preg_replace_callback('/^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/',function($matches){
+            $p_time = preg_replace_callback('/^(\d{4})[^\d]*?(\d\d)[^\d]*?(\d\d)[^\d]*?(\d\d)[^\d]*?(\d\d)[^\d]*?(\d\d)$/',function($matches){
                 if (
                        $matches[1]>=1970 && $matches[1]<=2999
                     && $matches[2]>=1 && $matches[2]<=12
@@ -43,7 +43,7 @@ class Utility{
                 }
                 return $matches[0];
             },$p_time);
-            $p_time = preg_replace_callback('/^(\d{4})(\d\d)(\d\d)$/',function($matches){
+            $p_time = preg_replace_callback('/^(\d{4})[^\d]*?(\d\d)[^\d]*?(\d\d)$/',function($matches){
                 if (
                        $matches[1]>=1970 && $matches[1]<=2999
                     && $matches[2]>=1 && $matches[2]<=12
@@ -80,7 +80,7 @@ class Utility{
             }
             else
             {
-                return time();
+                return null;
             }
             return $time;
         }
@@ -144,12 +144,26 @@ class Utility{
     {
         if (file_exists($file))
         {
-            $fTime = preg_replace('/^.*?\/(\d+)\/(.*?)\.md$/','$1',$file);
-            $fTitle = preg_replace('/^.*?\/(\d+)\/(.*?)\.md$/','$2',$file);
-            $item['fTitle'] = $fTitle;
-            $item['fTime'] = $fTime;
-            $item['fTimeLocal'] = static::timetostr($fTime);
-            $item['link'] = './' . $fTime . '.html';
+            $dirName = preg_replace('/^.*[\/\\\\](.*?)$/','$1',pathinfo($file,PATHINFO_DIRNAME));
+            $dirInfo = explode('#',$dirName);
+            $fTime = null;
+            $fTags = array();
+            foreach ($dirInfo as $value) {
+                if (is_null($fTime) && static::strtotime($value))
+                {
+                    $fTime = $value;
+                }
+                else if (!empty($value))
+                {
+                    $fTags[] = $value;
+                }
+            }
+            $fTitle              = pathinfo($file,PATHINFO_FILENAME);
+            $item['fTitle']      = $fTitle;
+            $item['fTags']       = $fTags;
+            $item['fTime']       = $fTime;
+            $item['fTimeLocal']  = static::timetostr($fTime);
+            $item['link']        = './' . urlencode($fTime) . '.html';
             $item['description'] = Utility::getDescription(file_get_contents($file),$fTitle);
             return $item;
         }
