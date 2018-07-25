@@ -112,7 +112,7 @@ class Utility{
             {
                 $isIgnore = false;
                 foreach ($ignoreStrings as $ignoreStr) {
-                    if (strpos($line,$ignoreStr)!==false)
+                    if (!empty($line) && !empty($ignoreStr) && strpos($line,$ignoreStr)!==false)
                     {
                         $isIgnore = true;
                         break;
@@ -160,7 +160,7 @@ class Utility{
                     $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($value),$value);
                 }
             }
-            $fTitle              = pathinfo($file,PATHINFO_FILENAME);
+            $fTitle              = preg_replace('/^.+\/(.*?)\.md$/','$1',$file);
             $item['fTitle']      = $fTitle;
             $item['fTags']       = $fTags;
             $item['fTagsLocal']  = implode('',$fTagsLocal);
