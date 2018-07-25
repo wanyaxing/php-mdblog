@@ -140,34 +140,47 @@ class Utility{
         }
         return Utility::getInfoOfFile($mdFile);
     }
+
+    public static function getDirInfoOfName($dir)
+    {
+        $dirName = preg_replace('/^.*[\/\\\\](.*?)$/','$1',$dir);
+        $dirInfo = explode('.',$dirName);
+        $fTime = null;
+        $fTags = array();
+        $fTagsLocal = array();
+        foreach ($dirInfo as $value) {
+            if (is_null($fTime) && static::strtotime($value))
+            {
+                $fTime = $value;
+            }
+            else if (!empty($value))
+            {
+                $fTags[] = $value;
+                $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($value),$value);
+            }
+        }
+        return array(
+                    'fTags'=>$fTags,
+                    'fTagsLocal'=>$fTagsLocal,
+                    'fTime'=>$fTime,
+                    'dirName'=>$dirName,
+                );
+    }
+
     public static function getInfoOfFile($file)
     {
         if (file_exists($file))
         {
-            $dirName = preg_replace('/^.*[\/\\\\](.*?)$/','$1',pathinfo($file,PATHINFO_DIRNAME));
-            $dirInfo = explode('.',$dirName);
-            $fTime = null;
-            $fTags = array();
-            $fTagsLocal = array();
-            foreach ($dirInfo as $value) {
-                if (is_null($fTime) && static::strtotime($value))
-                {
-                    $fTime = $value;
-                }
-                else if (!empty($value))
-                {
-                    $fTags[] = $value;
-                    $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($value),$value);
-                }
-            }
-            $fTitle              = preg_replace('/^.+\/(.*?)\.md$/','$1',$file);
+            $dir                 = preg_replace('/^(.+)\/(.*?)\.md$/','$1',$file);
+            $dirInfo             = Utility::getDirInfoOfName($dir);
+            $fTitle              = preg_replace('/^(.+)\/(.*?)\.md$/','$2',$file);
             $item['fTitle']      = $fTitle;
-            $item['fTags']       = $fTags;
-            $item['fTagsLocal']  = implode('',$fTagsLocal);
-            $item['fTime']       = $fTime;
-            $item['dirName']     = $dirName;
-            $item['fTimeLocal']  = static::timetostr($fTime);
-            $item['link']        = './' . urlencode($fTime) . '.html';
+            $item['fTags']       = $dirInfo['fTags'];
+            $item['fTagsLocal']  = implode('',$dirInfo['fTagsLocal']);
+            $item['fTime']       = $dirInfo['fTime'];
+            $item['dirName']       = $dirInfo['dirName'];
+            $item['fTimeLocal']  = static::timetostr($dirInfo['fTime']);
+            $item['link']        = './' . urlencode($dirInfo['fTime']) . '.html';
             $item['description'] = Utility::getDescription(file_get_contents($file),$fTitle);
             return $item;
         }
