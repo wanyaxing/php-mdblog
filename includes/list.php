@@ -61,7 +61,7 @@
             <a class="btn_loadmore" >你发现了一片荒漠，这儿啥都没有。。。</a>
         <?php endif ?>
         <?php if ($page * $size < count($dirList)): ?>
-            <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">加载更多</a>
+            <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
         <?php endif ?>
 <?php if (!Utility::isAjax()): ?>
     </div>
