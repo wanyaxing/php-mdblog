@@ -5,6 +5,14 @@ A blog which write with markdown which supported by php.
 
 ![demo.gif](./post/20160816091230/demo.gif)
 
+## 优点
+* 使用 Markdown 语法，以文件夹形式存储，图片紧随不丢不乱。
+* 不用编译，保存就是发布。
+* 支持标签
+
+## 缺点
+* 不支持留言（也不准备支持）
+
 ## 运行环境
 
 * 默认使用 `Apache+PHP` 的运行环境，使用 `.htaccess` 进行网址转换。
