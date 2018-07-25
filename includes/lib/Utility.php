@@ -181,6 +181,7 @@ class Utility{
             $item['dirName']       = $dirInfo['dirName'];
             $item['fTimeLocal']  = static::timetostr($dirInfo['fTime']);
             $item['link']        = './' . urlencode($dirInfo['fTime']) . '.html';
+            $item['url']         = MDBLOG_ROOT_URL . '/' . urlencode($dirInfo['fTime']) . '.html';
             $item['description'] = Utility::getDescription(file_get_contents($file),$fTitle);
             return $item;
         }

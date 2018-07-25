@@ -233,10 +233,14 @@ ul, li {
 .item_amex .content{
     position: relative;
     font-size: 12pt;
-    padding: 0 40px;
+    padding: 0 40px 40px;
 }
 .item_amex .content img{
     max-width: 95%;
+    text-align: center;
+}
+.item_amex .content .auth_info,.item_amex .content .auth_info a{
+    color: white;
 }
 .item_amex .btn_close{
     position: absolute;

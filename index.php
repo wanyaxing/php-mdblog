@@ -14,6 +14,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     define('MDBLOG_ROOT_PATH',__dir__);
     // 博客所在目录路径（即当从根目录到当前目录路径）
     define('MDBLOG_ROOT_URI',preg_replace ("/\/[^\/]*$/", '', $_SERVER['PHP_SELF']));
+    define('MDBLOG_ROOT_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.$_SERVER['HTTP_HOST'].MDBLOG_ROOT_URI   );
 
     // 博客所在URL根路径（比如xxx.com/blog)
     if (!defined('MDBLOG_CDN_HOST') || MDBLOG_DEPLOY_STATUS==1)
