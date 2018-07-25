@@ -8,29 +8,23 @@
     $detailKey = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
     if (Utility::strtotime($detailKey))
     {
-        foreach (glob(MDBLOG_ROOT_PATH.'/post/'.$detailKey.'/*.md') as $_file) {
+        foreach (glob(MDBLOG_ROOT_PATH.'/post/*'.$detailKey.'*/*.md') as $_file) {
             $mdFile = $_file;
             break;
         }
-        if (isset($mdFile))
-        {
-            $mdInfo = Utility::getInfoOfFile($mdFile);
-            if ($detailKey!=$mdInfo['fTime'])
-            {//只允许使用 fTime 作为 url 关键字
-                $mdFile = null;
-            }
-        }
     }
-    else
-    {
-        $mdFile = MDBLOG_ROOT_PATH.'/post/'.$detailKey.'.md';
-    }
+
     if (!isset($mdFile) || !file_exists($mdFile))
     {
         include __dir__ .  '/404.php';
         exit;
     }
 
+    $mdInfo = Utility::getInfoOfFile($mdFile);
+    if ($detailKey!=$mdInfo['fTime'])
+    {//只允许使用 fTime 作为 url 关键字
+        $mdFile = null;
+    }
 
     $content = file_get_contents($mdFile);
 
@@ -39,9 +33,9 @@
 
     $html = $Parsedown->text($content); # prints: <p>Hello <em>Parsedown</em>!</p>
     // 转化相对当前文件路径为可访问的URL路径
-    $GLOBALS['detailKey'] = $detailKey;
+    $GLOBALS['dirName'] = $mdInfo['dirName'];
     $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
-        $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['detailKey'] .'/' . $matches[2]);
+        $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['dirName'] .'/' . $matches[2]);
         $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
         $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
         return $matches[1] . $imgFileUrl . $matches[3] ;
@@ -57,9 +51,7 @@
         return false;
     }
 
-    $item = Utility::getInfoOfFile($mdFile);
-
-    $title = $item['fTitle'];
+    $title = $mdInfo['fTitle'];
 ?>
 <?php include __dir__ . '/header.php'; ?>
 <body>
@@ -69,10 +61,13 @@
             <div class="item_li item_amex item_detail" >
                 <div class="item_bg">
                     <div class="item_body">
-                        <div class="name"><?= $item['fTitle'] ?></div>
-                        <div class="time"><?= $item['fTimeLocal'] ?></div>
-                        <!-- <div class="description"><?= $item['description'] ?></div> -->
+                        <div class="name"><?= $mdInfo['fTitle'] ?></div>
+                        <!-- <div class="description"><?= $mdInfo['description'] ?></div> -->
                         <div class="content markdown-body"><?= $html ?></div>
+                        <div class="item_footer">
+                            <div class="tags"><?= $mdInfo['fTagsLocal'] ?></div>
+                            <div class="time"><?= $mdInfo['fTimeLocal'] ?></div>
+                        </div>
                     </div>
                 </div>
             </div>

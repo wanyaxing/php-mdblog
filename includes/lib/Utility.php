@@ -145,9 +145,10 @@ class Utility{
         if (file_exists($file))
         {
             $dirName = preg_replace('/^.*[\/\\\\](.*?)$/','$1',pathinfo($file,PATHINFO_DIRNAME));
-            $dirInfo = explode('#',$dirName);
+            $dirInfo = explode('.',$dirName);
             $fTime = null;
             $fTags = array();
+            $fTagsLocal = array();
             foreach ($dirInfo as $value) {
                 if (is_null($fTime) && static::strtotime($value))
                 {
@@ -156,12 +157,15 @@ class Utility{
                 else if (!empty($value))
                 {
                     $fTags[] = $value;
+                    $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($value),$value);
                 }
             }
             $fTitle              = pathinfo($file,PATHINFO_FILENAME);
             $item['fTitle']      = $fTitle;
             $item['fTags']       = $fTags;
+            $item['fTagsLocal']  = implode('',$fTagsLocal);
             $item['fTime']       = $fTime;
+            $item['dirName']     = $dirName;
             $item['fTimeLocal']  = static::timetostr($fTime);
             $item['link']        = './' . urlencode($fTime) . '.html';
             $item['description'] = Utility::getDescription(file_get_contents($file),$fTitle);

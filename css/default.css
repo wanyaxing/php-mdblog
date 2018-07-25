@@ -148,6 +148,15 @@ ul, li {
     color: black;
 }
 
+.info_tips{
+    display: block;
+    width: 100%;
+    padding:10px 30px;
+    margin-top: -20px;
+    top:-40px;
+    position: relative;
+}
+
 .btn_loadmore{
     display: block;
     margin-top: 80px;
@@ -180,15 +189,32 @@ ul, li {
 .item_hiding .name{
     text-align: left;
 }
-.item_amex .time{
+.item_amex .item_footer{
     position: absolute;
-    right: 20px;
     top: 193px;
     font-size: 10pt;
+    width: 100%;
+    padding: 0 20px;
+    text-align: right;
 }
-.item_bg_fixed .time,.item_detail .time{
+.item_amex .item_footer .tags{
+    display: none;
+    position: absolute;
+}
+.item_amex .item_footer .tags a,.info_tips .tag{
+    display: inline-block;
+    padding: 0 12px;
+    line-height: 30px;
+    border-radius: 30px;
+    background: #e8f3fe;
+    margin: 0 5px;
+}
+.item_bg_fixed .item_footer,.item_detail .item_footer{
     bottom: 43px;
     top: auto;
+}
+.item_bg_fixed .item_footer .tags,.item_detail .item_footer .tags{
+    display: block;
 }
 .item_amex .description{
     position: relative;

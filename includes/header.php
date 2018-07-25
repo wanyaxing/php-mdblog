@@ -15,5 +15,5 @@
 <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
 <link rel="stylesheet" type="text/css" href="<?=MDBLOG_CDN_URL?>/css/github-markdown.css">
 <link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/js/lib/highlight/github.min.css">
-<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0724.4">
+<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0725.1">
 </head>
