@@ -47,6 +47,10 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     {
         include MDBLOG_ROOT_PATH.'/includes/sitemap.txt.php';
     }
+    else if ($requestActions[0]=='feed.xml')
+    {
+        include MDBLOG_ROOT_PATH.'/includes/feed.xml.php';
+    }
     else
     {
         include MDBLOG_ROOT_PATH.'/includes/404.php';
