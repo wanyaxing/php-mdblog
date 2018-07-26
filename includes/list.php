@@ -2,7 +2,6 @@
     $page     = isset($_GET['page']) && Utility::is_int($_GET['page'])?$_GET['page']:1;
     $size     = MDBLOG_PAGE_SIZE;
 
-    $tag      = isset($_GET['tag'])?$_GET['tag']:'';
     if (isset($_GET['tag']))
     {
         if (preg_match('/[* .\/\\\?]/',$_GET['tag']))
