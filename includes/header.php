@@ -16,5 +16,5 @@
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed.xml" />
 <link rel="stylesheet" type="text/css" href="<?=MDBLOG_CDN_URL?>/css/github-markdown.css">
 <link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/js/lib/highlight/github.min.css">
-<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0728.1">
+<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0728.2">
 </head>
