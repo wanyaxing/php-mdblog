@@ -162,7 +162,7 @@ class Utility{
         }
 
         usort($dirInfoList,function($a,$b){
-            return $a['fTimeCreated']<=$b['fTimeCreated']?1:-1;
+            return $a['fTimeModified']<=$b['fTimeModified']?1:-1;
         });
 
         $currentList =  array_slice($dirInfoList, ($page-1) * $size,$size);
