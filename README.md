@@ -6,6 +6,7 @@ A blog which write with markdown which supported by php.
 ![demo.gif](./post/20160816091230.20180727170638.php.markdown/demo.gif)
 
 ## 支持特性
+* 免数据库，免安装，直接存储到任意 PHP 环境目录中即可访问。
 * 使用 Markdown 语法，以文件夹形式存储，图片紧随不丢不乱。
 * 不用编译，保存文档就是发布。
 * 支持标签
