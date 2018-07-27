@@ -2,31 +2,7 @@
     $page     = isset($_GET['page']) && Utility::is_int($_GET['page'])?$_GET['page']:1;
     $size     = MDBLOG_PAGE_SIZE;
 
-    if (isset($_GET['tag']))
-    {
-        if (preg_match('/[* .\/\\\?]/',$_GET['tag']))
-        {
-            include __dir__ .  '/404.php';
-            exit;
-        }
-        $dirList   = array_merge(
-                        glob(MDBLOG_ROOT_PATH.'/post/*.'.$_GET['tag'],GLOB_ONLYDIR)
-                        ,glob(MDBLOG_ROOT_PATH.'/post/*.'.$_GET['tag'].'.*',GLOB_ONLYDIR)
-                    );
-    }
-    else
-    {
-        $dirList   = glob(MDBLOG_ROOT_PATH.'/post/*',GLOB_ONLYDIR);
-    }
-    $dirList = array_unique($dirList);
-    rsort($dirList);
-
-    $currentList =  array_slice($dirList, ($page-1) * $size,$size);
-
-    $items = array();
-    foreach ($currentList as $dir) {
-        $items[] = Utility::getInfoOfDir($dir);
-    }
+    $dirListInfo = Utility::getDirListInfo($page,$size,isset($_GET['tag'])?$_GET['tag']:null);
 
     $title = MDBLOG_TITLE;
 ?>
@@ -40,26 +16,14 @@
             <div class="info_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </div>
         <?php endif ?>
 <?php endif ?>
-        <?php foreach ($items as $mdInfo): ?>
-            <div class="item_li item_amex">
-                <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
-                    <div class="item_body" >
-                        <a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a>
-                        <div class="description"><?= $mdInfo['description'] ?></div>
-                        <div class="content markdown-body"></div>
-                        <div class="item_footer">
-                            <div class="tags"><?= $mdInfo['fTagsLocal'] ?></div>
-                            <div class="time"><?= $mdInfo['fTimeLocal'] ?></div>
-                        </div>
-                        <div class="btn_close">X</div>
-                    </div>
-                </div>
-            </div>
+        <?php foreach ($dirListInfo['currentList'] as $dirInfo): ?>
+            <?php $mdInfo = Utility::getMdInfoOfDirInfo($dirInfo); ?>
+            <?php Utility::printMdInfo($mdInfo)?>
         <?php endforeach ?>
-        <?php if (count($items)==0): ?>
+        <?php if (count($dirListInfo['currentList'])==0): ?>
             <a class="btn_loadmore" >你发现了一片荒漠，这儿啥都没有。。。</a>
         <?php endif ?>
-        <?php if ($page * $size < count($dirList)): ?>
+        <?php if ($page * $size < $dirListInfo['countTotal']): ?>
             <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
         <?php endif ?>
 <?php if (!Utility::isAjax()): ?>

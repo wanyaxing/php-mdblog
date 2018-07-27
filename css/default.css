@@ -183,7 +183,7 @@ ul, li {
     font-weight: 600;
     padding: 10px 20px;
 }
-.item_bg_fixed .name,.item_detail .name{
+.item_bg_fixed .name,#blog_detail .name{
     text-align: center;
 }
 .item_hiding .name{
@@ -194,6 +194,7 @@ ul, li {
     top: 193px;
     font-size: 10pt;
     width: 100%;
+    min-height: 19px;
     padding: 0 20px;
     text-align: right;
 }
@@ -209,11 +210,23 @@ ul, li {
     background: #e8f3fe;
     margin: 0 5px;
 }
-.item_bg_fixed .item_footer,.item_detail .item_footer{
+.item_bg_fixed .item_footer,#blog_detail .item_footer{
     bottom: 43px;
     top: auto;
 }
-.item_bg_fixed .item_footer .tags,.item_detail .item_footer .tags{
+.item_bg_fixed .item_footer .tags,#blog_detail .item_footer .tags{
+    display: block;
+}
+.item_footer .time span{
+    display: none;
+}
+.item_footer .time span:last-child{
+    display: block;
+}
+.item_footer:hover .time span:last-child{
+    display: none;
+}
+.item_footer:hover .time span:first-child{
     display: block;
 }
 .item_amex .description{
@@ -229,6 +242,9 @@ ul, li {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+#blog_detail .description{
+    display: none;
 }
 .item_amex .content{
     position: relative;

@@ -5,43 +5,16 @@
     $title = 'Not Found';
     $content = '';
 
-    $detailKey = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
-    if (Utility::strtotime($detailKey))
+    $fTime = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
+
+    $mdInfo = Utility::getMdInfoOfFtime($fTime);
+
+    if (is_null($mdInfo))
     {
-        foreach (glob(MDBLOG_ROOT_PATH.'/post/*'.$detailKey.'*/*.md') as $_file) {
-            $mdFile = $_file;
-            break;
-        }
+        Utility::exit404();
     }
 
-    if (!isset($mdFile) || !file_exists($mdFile))
-    {
-        include __dir__ .  '/404.php';
-        exit;
-    }
-
-    $mdInfo = Utility::getInfoOfFile($mdFile);
-    if ($detailKey!=$mdInfo['fTime'])
-    {//只允许使用 fTime 作为 url 关键字
-        $mdFile = null;
-    }
-
-    $content = file_get_contents($mdFile);
-
-    // $content .= "\n" . '原文来自' . MDBLOG_TITLE . '：' . $mdInfo['link'];
-
-
-    $Parsedown = new Parsedown();
-
-    $html = $Parsedown->text($content); # prints: <p>Hello <em>Parsedown</em>!</p>
-    // 转化相对当前文件路径为可访问的URL路径
-    $GLOBALS['dirName'] = $mdInfo['dirName'];
-    $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
-        $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['dirName'] .'/' . $matches[2]);
-        $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
-        $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
-        return $matches[1] . $imgFileUrl . $matches[3] ;
-    },$html);
+    $html   = Utility::getHtmlOfMdInfo($mdInfo);
 
     $html .= sprintf('<p class="auth_info" title="转载注明来源即可">原文来自%s：<a href="%s">%s</a></p>',MDBLOG_TITLE,$mdInfo['url'],$mdInfo['url']);
 
@@ -62,19 +35,7 @@
     <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
         <div id="blog_detail">
-            <div class="item_li item_amex item_detail" >
-                <div class="item_bg">
-                    <div class="item_body">
-                        <div class="name"><?= $mdInfo['fTitle'] ?></div>
-                        <!-- <div class="description"><?= $mdInfo['description'] ?></div> -->
-                        <div class="content markdown-body"><?= $html ?></div>
-                        <div class="item_footer">
-                            <div class="tags"><?= $mdInfo['fTagsLocal'] ?></div>
-                            <div class="time"><?= $mdInfo['fTimeLocal'] ?></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php Utility::printMdInfo($mdInfo,$html)?>
         </div>
         <?php include __dir__ . '/side.php'; ?>
     </div>

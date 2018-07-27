@@ -1,17 +1,5 @@
 <?php
-    $page     = 1;
-    $size     = MDBLOG_PAGE_SIZE;
-
-    $dirList   = glob(MDBLOG_ROOT_PATH.'/post/*',GLOB_ONLYDIR);
-
-    rsort($dirList);
-
-    $currentList =  array_slice($dirList, ($page-1) * $size,$size);
-
-    $items = array();
-    foreach ($currentList as $dir) {
-        $items[] = Utility::getInfoOfDir($dir);
-    }
+    $dirListInfo = Utility::getDirListInfo(1,MDBLOG_PAGE_SIZE,null);
 
     $title = MDBLOG_TITLE;
 
@@ -23,15 +11,16 @@ print('<?xml version="1.0" encoding="utf-8"?>
         <link><![CDATA['.MDBLOG_ROOT_URL.']]></link>
         <description><![CDATA['.MDBLOG_HOME_DESCRIPTION.']]>
         </description>
-        <pubDate>'.(count($items)>0?date(DATE_RSS,Utility::strtotime($items[0]['fTime'])):date(DATE_RSS)).'</pubDate>
+        <pubDate>'.(count($dirListInfo['currentList'])>0?date(DATE_RSS,Utility::strtotime($dirListInfo['currentList'][0]['fTimeModified'])):date(DATE_RSS)).'</pubDate>
         <ttl>60</ttl>');
 
-foreach ($items as $item) {
+foreach ($dirListInfo['currentList'] as $dirInfo) {
+    $mdInfo = Utility::getMdInfoOfDirInfo($dirInfo);
     print("\n".'            <item>');
-    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','title',$item['fTitle'],'title');
-    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','link',$item['url'],'link');
-    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','description',$item['description'],'description');
-    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','pubDate',date(DATE_RSS,Utility::strtotime($item['fTime'])),'pubDate');
+    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','title',$mdInfo['fTitle'],'title');
+    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','link',$mdInfo['url'],'link');
+    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','description',$mdInfo['description'],'description');
+    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','pubDate',date(DATE_RSS,Utility::strtotime($mdInfo['fTimeModified'])),'pubDate');
     print("\n".'            </item>');
 }
 

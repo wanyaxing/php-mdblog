@@ -57,7 +57,6 @@ class Utility{
             $strtotime = strtotime($p_time);
             if (static::is_int($p_time) )
             {
-                if (preg_match('/(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)//'))
                 if ($p_time>=19700101 && $p_time<=20991231 && strtotime(date('Y-m-d H:i:s',$strtotime)) == $strtotime)
                 {//1970 - 2099
                     $time = $strtotime;
@@ -131,62 +130,210 @@ class Utility{
         return '<p>'.implode('</p><p>',$description).'</p>';
     }
 
-    public static function getInfoOfDir($dir)
+    // 遍历获取所有文章基础信息
+    public static function getDirListInfo($page=1,$size=10,$tag=null)
     {
-        $mdFile = null;
-        foreach (glob($dir.'/*.md') as $_file) {
-            $mdFile = $_file;
-            break;
+        if (isset($tag))
+        {
+            if (preg_match('/[* .\/\\\?]/',$tag))
+            {
+                Utility::exit404();
+            }
+            $dirList   = array_merge(
+                glob(MDBLOG_ROOT_PATH.'/post/*.'.$tag,GLOB_ONLYDIR)
+                ,glob(MDBLOG_ROOT_PATH.'/post/*.'.$tag.'.*',GLOB_ONLYDIR)
+            );
         }
-        return Utility::getInfoOfFile($mdFile);
+        else
+        {
+            $dirList   = glob(MDBLOG_ROOT_PATH.'/post/*',GLOB_ONLYDIR);
+        }
+
+        $dirList = array_unique($dirList);
+
+        $dirInfoList = array();
+        $timeNow = time();
+        foreach ($dirList as $dir) {
+            $dirInfo = Utility::getDirInfoOfPath($dir);
+            if ($dirInfo['fTimeCreated']<=$timeNow)
+            {//只有创建时间在当前时间的才算，未来的还没到时候。
+                $dirInfoList[] = $dirInfo;
+            }
+        }
+
+        usort($dirInfoList,function($a,$b){
+            return $a['fTimeCreated']<=$b['fTimeCreated']?1:-1;
+        });
+
+        $currentList =  array_slice($dirInfoList, ($page-1) * $size,$size);
+
+        return array(
+                    'currentList'=>$currentList,
+                    'countTotal'=>count($dirList),
+                ) ;
     }
 
-    public static function getDirInfoOfName($dir)
+
+    // 获取指定路径的基础信息
+    public static function getDirInfoOfPath($path)
     {
+        if (file_exists($path))
+        {
+            $dir = preg_replace('/^(.+)\/(.*?)\.md$/','$1',$path);
+        }
+        else
+        {
+            $dir = $path;
+        }
         $dirName = preg_replace('/^.*[\/\\\\](.*?)$/','$1',$dir);
         $dirInfo = explode('.',$dirName);
         $fTime = null;
+        $fTimeCreated = null;
+        $fTimeModified = null;
         $fTags = array();
         $fTagsLocal = array();
         foreach ($dirInfo as $value) {
-            if (is_null($fTime) && static::strtotime($value))
+            $time = static::strtotime($value);
+            if ($time)
             {
-                $fTime = $value;
+                if (is_null($fTime))
+                {
+                    $fTimeCreated   = $time;
+                    $fTime          = $value;
+                }
+                else
+                {
+                    // 智能判断创建时间和修改时间
+                    if ($fTimeCreated>$time)
+                    {
+                        $fTimeModified = $fTimeCreated;
+                        $fTimeCreated  = $time;
+                        $fTime         = $value;
+                    }
+                    else
+                    {
+                        $fTimeModified = $time;
+                    }
+                }
+                continue;
             }
-            else if (!empty($value))
+            if (!empty($value))
             {
                 $fTags[] = $value;
-                $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($value),$value);
             }
         }
         return array(
-                    'fTags'=>$fTags,
-                    'fTagsLocal'=>$fTagsLocal,
-                    'fTime'=>$fTime,
-                    'dirName'=>$dirName,
+                    'dir'         => $dir,
+                    'dirName'       => $dirName,
+                    'fTags'         => $fTags,
+                    'fTime'         => $fTime,
+                    'fTimeCreated'  => $fTimeCreated,
+                    'fTimeModified' => $fTimeModified?$fTimeModified:$fTimeCreated,
                 );
     }
 
-    public static function getInfoOfFile($file)
+    public static function getMdInfoOfFtime($fTime)
     {
-        if (file_exists($file))
+        if (Utility::strtotime($fTime))
         {
-            $dir                 = preg_replace('/^(.+)\/(.*?)\.md$/','$1',$file);
-            $dirInfo             = Utility::getDirInfoOfName($dir);
-            $fTitle              = preg_replace('/^(.+)\/(.*?)\.md$/','$2',$file);
-            $item['fTitle']      = $fTitle;
-            $item['fTags']       = $dirInfo['fTags'];
-            $item['fTagsLocal']  = implode('',$dirInfo['fTagsLocal']);
-            $item['fTime']       = $dirInfo['fTime'];
-            $item['dirName']       = $dirInfo['dirName'];
-            $item['fTimeLocal']  = static::timetostr($dirInfo['fTime']);
-            $item['link']        = './' . urlencode($dirInfo['fTime']) . '.html';
-            $item['url']         = MDBLOG_ROOT_URL . '/' . urlencode($dirInfo['fTime']) . '.html';
-            $item['description'] = Utility::getDescription(file_get_contents($file),$fTitle);
-            return $item;
+            foreach (glob(MDBLOG_ROOT_PATH.'/post/*'.$fTime.'*',GLOB_ONLYDIR) as $_dir) {
+                $mdDir = $_dir;
+                break;
+            }
+        }
+
+        if (isset($mdDir))
+        {
+            $dirInfo = Utility::getDirInfoOfPath($mdDir);
+            if ($dirInfo['fTime'] == $fTime)
+            {
+                return Utility::getMdInfoOfDirInfo($dirInfo);
+            }
+        }
+
+        return null;
+
+    }
+
+    // 根据基础信息获取文章信息
+    public static function getMdInfoOfDirInfo($dirInfo)
+    {
+        $mdFile = null;
+        foreach (glob($dirInfo['dir'].'/*.md') as $_file) {
+            $mdFile = $_file;
+            break;
+        }
+        if (isset($mdFile))
+        {
+            $fTitle              = preg_replace('/^(.+)\/(.*?)\.md$/','$2',$mdFile);
+            $dirInfo['fTitle']      = $fTitle;
+            $dirInfo['mdFile']      = $mdFile;
+            $fTagsLocal = array();
+            foreach ($dirInfo['fTags'] as $tag) {
+                $fTagsLocal[] = sprintf('<a href="./?tag=%s">%s</a>',urlencode($tag),$tag);
+            }
+            $dirInfo['fTagsLocal']  = implode('',$fTagsLocal);
+            $dirInfo['link']        = './' . urlencode($dirInfo['fTime']) . '.html';
+            $dirInfo['url']         = MDBLOG_ROOT_URL . '/' . urlencode($dirInfo['fTime']) . '.html';
+            $dirInfo['description'] = Utility::getDescription(file_get_contents($mdFile),$fTitle);
+            return $dirInfo;
         }
         return null;
     }
+
+    public static function getHtmlOfMdInfo($mdInfo)
+    {
+        $content = file_get_contents($mdInfo['mdFile']);
+        $Parsedown = new Parsedown();
+        $html = $Parsedown->text($content); # prints: <p>Hello <em>Parsedown</em>!</p>
+        // 转化相对当前文件路径为可访问的URL路径
+        $GLOBALS['dirName'] = $mdInfo['dirName'];
+        $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
+            $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['dirName'] .'/' . $matches[2]);
+            $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
+            $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
+            return $matches[1] . $imgFileUrl . $matches[3] ;
+        },$html);
+
+        return $html;
+    }
+
+    public static function exit404($message=null)
+    {
+        include MDBLOG_ROOT_PATH .  '/includes/404.php';
+        exit;
+    }
+
+    public static function printMdInfo($mdInfo,$html='')
+    {
+?>
+            <div class="item_li item_amex" >
+                <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
+                    <div class="item_body" >
+                        <a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a>
+                        <div class="description"><?= $mdInfo['description'] ?></div>
+                        <div class="content markdown-body"><?= $html ?></div>
+                        <div class="item_footer">
+                            <div class="tags">
+                                <?php foreach ($mdInfo['fTags'] as $tag): ?>
+                                    <a href="./?tag=<?= urlencode($tag) ?>"><?= $tag ?></a>
+                                <?php endforeach ?>
+                            </div>
+                            <div class="time">
+                                <span class="time_created">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></span>
+                                <?php if ($mdInfo['fTimeModified'] != $mdInfo['fTimeCreated']): ?>
+                                    <span class="time_modified">编辑于：<?= Utility::timetostr($mdInfo['fTimeModified']) ?></span>
+                                <?php endif ?>
+                            </div>
+                        </div>
+                        <div class="btn_close">X</div>
+                    </div>
+                </div>
+            </div>
+<?php
+
+    }
+
 
     /*当前请求是否ajax请求*/
     public static function isAjax()
