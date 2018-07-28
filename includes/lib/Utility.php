@@ -96,7 +96,7 @@ class Utility{
         return date($p_format,static::strtotime($p_time));
     }
 
-    public static function getDescription($text,$ignoreStrings=array())
+    public static function getDescriptions($text,$ignoreStrings=array())
     {
         if (isset($ignoreStrings) && !is_array($ignoreStrings))
         {
@@ -119,7 +119,7 @@ class Utility{
                 }
                 if (!$isIgnore)
                 {
-                    $description[] = preg_replace('/\[(.*?)\]\((.*?)\)/','$1',$line)."\n";
+                    $description[] = preg_replace('/\[(.*?)\]\((.*?)\)/','$1',$line);
                     if (count($description)>=3)
                     {
                         break;
@@ -127,7 +127,7 @@ class Utility{
                 }
             }
         }
-        return '<p>'.implode('</p><p>',$description).'</p>';
+        return $description;
     }
 
     // 遍历获取所有文章基础信息
@@ -275,7 +275,7 @@ class Utility{
             $dirInfo['fTagsLocal']  = implode('',$fTagsLocal);
             $dirInfo['link']        = './' . urlencode($dirInfo['fTime']) . '.html';
             $dirInfo['url']         = MDBLOG_ROOT_URL . '/' . urlencode($dirInfo['fTime']) . '.html';
-            $dirInfo['description'] = Utility::getDescription(file_get_contents($mdFile),$fTitle);
+            $dirInfo['descriptions'] = Utility::getDescriptions(file_get_contents($mdFile),$fTitle);
             return $dirInfo;
         }
         return null;
@@ -311,7 +311,9 @@ class Utility{
                 <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
                     <div class="item_body" >
                         <h1><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h1>
-                        <div class="description"><?= $mdInfo['description'] ?></div>
+                        <?php if (empty($html)): ?>
+                        <div class="description"><?= '<p>'.implode('</p><p>',$mdInfo['descriptions']).'</p>' ?></div>
+                        <?php endif ?>
                         <div class="content markdown-body"><?= $html ?></div>
                         <div class="item_footer">
                             <div class="tags">

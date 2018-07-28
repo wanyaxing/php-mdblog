@@ -28,7 +28,8 @@
         return false;
     }
 
-    $title = $mdInfo['fTitle'];
+    $title       = $mdInfo['fTitle'];
+    $description = implode(' ',$mdInfo['descriptions']);
 ?>
 <?php include __dir__ . '/header.php'; ?>
 <body>

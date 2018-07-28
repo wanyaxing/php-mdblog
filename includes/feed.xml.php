@@ -19,7 +19,7 @@ foreach ($dirListInfo['currentList'] as $dirInfo) {
     print("\n".'            <item>');
     printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','title',$mdInfo['fTitle'],'title');
     printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','link',$mdInfo['url'],'link');
-    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','description',$mdInfo['description'],'description');
+    printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','description',implode('</p><p>',$mdInfo['descriptions']),'description');
     printf("\n".'                <%s><![CDATA[%s]]>'."\n".'                </%s>','pubDate',date(DATE_RSS,Utility::strtotime($mdInfo['fTimeModified'])),'pubDate');
     print("\n".'            </item>');
 }

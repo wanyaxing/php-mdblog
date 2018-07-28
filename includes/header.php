@@ -3,11 +3,8 @@
 <head>
 <title><?= isset($title)?$title:MDBLOG_TITLE ?></title>
 <meta charset="utf-8">
-<meta itemprop="name" content="EPIC APPS EVERY DAY">
 <meta itemprop="description" content="<?= isset($description)?$description:MDBLOG_HOME_DESCRIPTION ?>">
 <meta name="viewport" content="width=480,user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-title" content="AppJK">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
 <meta http-equiv="Cache-Control" content="no-siteapp">
 <meta name="format-detection" content="telephone=no">
