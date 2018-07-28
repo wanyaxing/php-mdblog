@@ -12,8 +12,26 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
     // 博客所在根目录
     define('MDBLOG_ROOT_PATH',__dir__);
-    // 博客所在目录路径（即当从根目录到当前目录路径）
-    define('MDBLOG_ROOT_URI',preg_replace ("/\/[^\/]*$/", '', $_SERVER['PHP_SELF']));
+
+    // 当前请求的子路径（不含域名和参数）
+    $requestPath = preg_replace ("/(\/*[\?#].*$|[\?#].*$|\/*$|\.\.+)/", '', $_SERVER['REQUEST_URI']);
+    $requestPath = preg_replace('/\/+/','/',$requestPath);
+
+    // 博客所在根路径（注：不是网站根目录）
+    $mdblogRootUri = preg_replace ("/\/[^\/]*$/", '', $_SERVER['PHP_SELF']);
+    while($mdblogRootUri!='')
+    {
+        if (strpos($requestPath,$mdblogRootUri)===0)
+        {
+            break;
+        }
+        $mdblogRootUri = preg_replace('/^\/[^\/]+/','',$mdblogRootUri);
+    }
+    define('MDBLOG_ROOT_URI',$mdblogRootUri);
+
+
+
+    // 博客根路径绝对地址（用于静态化网址）
     define('MDBLOG_ROOT_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.$_SERVER['HTTP_HOST'].MDBLOG_ROOT_URI   );
 
     // 博客所在URL根路径（比如xxx.com/blog)
@@ -27,8 +45,6 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
 
 
-    // 当前请求的子路径（不含域名）
-    $requestPath = preg_replace ("/(\/*[\?#].*$|[\?#].*$|\/*$|\.\.+)/", '', $_SERVER['REQUEST_URI']);
     // 从当前请求子路径中移除博客所在URL路径，则获得当前请求中相对博客的操作 如 /blog/2 得 /2通常是翻页
     $relativePath = str_replace(MDBLOG_ROOT_URI,'',$requestPath);
     // 将操作分成数组
