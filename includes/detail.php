@@ -34,9 +34,9 @@
 <body>
     <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
-        <div id="blog_detail">
+        <article id="blog_detail">
             <?php Utility::printMdInfo($mdInfo,$html)?>
-        </div>
+        </article>
         <?php include __dir__ . '/side.php'; ?>
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
