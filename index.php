@@ -46,7 +46,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
 
     // 从当前请求子路径中移除博客所在URL路径，则获得当前请求中相对博客的操作 如 /blog/2 得 /2通常是翻页
-    $relativePath = str_replace(MDBLOG_ROOT_URI,'',$requestPath);
+    $relativePath = substr($requestPath,strlen(MDBLOG_ROOT_URI));
     // 将操作分成数组
     $requestActions = explode('/',trim($relativePath,'/'));
 
