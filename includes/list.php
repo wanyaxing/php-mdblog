@@ -4,7 +4,10 @@
 
     $dirListInfo = Utility::getDirListInfo($page,$size,isset($_GET['tag'])?$_GET['tag']:null);
 
-    $title = MDBLOG_TITLE;
+    if (isset($_GET['tag']))
+    {
+        $title = $_GET['tag'].' 的搜索结果';
+    }
 ?>
 <?php if (!Utility::isAjax()): ?>
 <?php include __dir__ . '/header.php'; ?>

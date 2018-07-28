@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<title><?= isset($title)?$title:MDBLOG_TITLE ?></title>
+<title><?= isset($title)?$title.' - '.MDBLOG_TITLE:MDBLOG_TITLE ?></title>
 <meta charset="utf-8">
 <meta itemprop="description" content="<?= htmlspecialchars(isset($description)?$description:MDBLOG_HOME_DESCRIPTION) ?>">
 <meta name="viewport" content="width=480,user-scalable=no, viewport-fit=cover">
