@@ -35,6 +35,9 @@ a,a:active{
     text-decoration: none;
 }
 
+h1{
+    margin:0;
+}
 
 div, ul, li {
     margin: 0;
@@ -222,16 +225,16 @@ ul, li {
 .item_bg_fixed .item_footer .tags,#blog_detail .item_footer .tags{
     display: block;
 }
-.item_footer .time span{
+.item_footer .time time{
     display: none;
 }
-.item_footer .time span:last-child{
+.item_footer .time time:last-child{
     display: block;
 }
-.item_footer:hover .time span:last-child{
+.item_footer:hover .time time:last-child{
     display: none;
 }
-.item_footer:hover .time span:first-child{
+.item_footer:hover .time time:first-child{
     display: block;
 }
 .item_amex .description{

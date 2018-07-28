@@ -13,8 +13,8 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="format-detection" content="email=no">
 <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
-<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="./feed.xml" />
+<link rel="alternate" type="application/rss+xml" title="<?= MDBLOG_TITLE ?>" href="./feed.xml" />
 <link rel="stylesheet" type="text/css" href="<?=MDBLOG_CDN_URL?>/css/github-markdown.css">
 <link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/js/lib/highlight/github.min.css">
-<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0728.2">
+<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.css?v=0728.3">
 </head>

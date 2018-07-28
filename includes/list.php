@@ -11,9 +11,9 @@
 <body>
     <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
-    <article id="blog_list">
+    <main id="blog_list">
         <?php if (isset($_GET['tag'])): ?>
-            <div class="info_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </div>
+            <nav class="info_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
         <?php endif ?>
 <?php endif ?>
         <?php foreach ($dirListInfo['currentList'] as $dirInfo): ?>
@@ -27,7 +27,7 @@
             <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
         <?php endif ?>
 <?php if (!Utility::isAjax()): ?>
-    </article>
+    </main>
     <?php include __dir__ . '/side.php'; ?>
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>

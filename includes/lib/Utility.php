@@ -307,10 +307,10 @@ class Utility{
     public static function printMdInfo($mdInfo,$html='')
     {
 ?>
-            <div class="item_li item_amex" >
+            <article class="item_li item_amex" >
                 <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
                     <div class="item_body" >
-                        <a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a>
+                        <h1><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h1>
                         <div class="description"><?= $mdInfo['description'] ?></div>
                         <div class="content markdown-body"><?= $html ?></div>
                         <div class="item_footer">
@@ -320,16 +320,16 @@ class Utility{
                                 <?php endforeach ?>
                             </div>
                             <div class="time">
-                                <span class="time_created">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></span>
+                                <time class="time_created" pubdate="<?= date(DATE_ATOM,$mdInfo['fTimeCreated']) ?>">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></time>
                                 <?php if ($mdInfo['fTimeModified'] != $mdInfo['fTimeCreated']): ?>
-                                    <span class="time_modified">编辑于：<?= Utility::timetostr($mdInfo['fTimeModified']) ?></span>
+                                    <time class="time_modified" datetime="<?= date(DATE_ATOM,$mdInfo['fTimeModified']) ?>">编辑于：<?= Utility::timetostr($mdInfo['fTimeModified']) ?></time>
                                 <?php endif ?>
                             </div>
                         </div>
                         <div class="btn_close">X</div>
                     </div>
                 </div>
-            </div>
+            </article>
 <?php
 
     }
