@@ -16,7 +16,7 @@
     <div id="home_body">
     <main id="blog_list">
         <?php if (isset($_GET['tag'])): ?>
-            <nav class="info_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
+            <nav class="nav_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
         <?php endif ?>
 <?php endif ?>
         <?php foreach ($dirListInfo['currentList'] as $dirInfo): ?>

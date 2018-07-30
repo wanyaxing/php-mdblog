@@ -333,7 +333,7 @@ class Utility{
     public static function printMdInfo($mdInfo,$html='')
     {
 ?>
-            <article class="item_li item_amex" >
+            <article class="item_li" >
                 <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
                     <div class="item_body" >
                         <h1><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h1>

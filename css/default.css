@@ -47,7 +47,54 @@ ul, li {
     list-style: none outside none;
 }
 
-/*-----------------------------*/
+/*--------------顶部 侧栏 与 底部--------------------*/
+
+#top_bg{
+    width: 100%;
+    height: 80px;
+    background: white;
+    line-height: 80px;
+    margin-bottom: 30px;
+}
+
+#top_nav{
+    margin:0 auto;
+    position: relative;
+}
+#top_nav #icon_home{
+    padding: 0 30px;
+}
+#top_nav #btn_sideshow{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0 30px;
+    cursor: pointer;
+}
+
+#side_list{
+    position: absolute;
+    left: 480px;
+    top: 0px;
+}
+
+#user_info{
+    padding: 30px;
+    background: white;
+}
+
+
+#footer_body{
+    text-align: center;
+    color: rgb(169, 169, 169);
+    text-decoration: none;
+    font-size: small;
+    padding: 20px 30px 10px;
+}
+
+/*-------------正文----------------*/
+
 #home_body{
     margin:0 auto;
     position: relative;
@@ -107,56 +154,9 @@ ul, li {
     -webkit-overflow-scrolling: touch;
 }
 
-.btn_close{
-    display: none;
-}
+/*--------列表页-------*/
 
-.item_li .item_bg_fixed .btn_close{
-    display: block;
-}
-
-.item_li .item_hiding .btn_close{
-    display: none;
-}
-
-
-
-.item_li .item_body .blocks{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.item_li .item_body .blocks div{
-    width: 0;
-    height: 0;
-    border: 0px transparent solid;
-    position: absolute;
-}
-.item_li .item_body .blocks .bt{
-}
-.item_li .item_body .blocks .br{
-
-}
-.item_li .item_body .blocks .bb{
-
-}
-.item_li .item_body .blocks .bl{
-
-}
-
-.item_dark{
-    color: white;
-}
-
-.item_light{
-    color: black;
-}
-
-.info_tips{
+.nav_tips{
     display: block;
     width: 100%;
     padding:10px 30px;
@@ -171,18 +171,9 @@ ul, li {
     width: 100%;
     text-align: center;
 }
-/*------------------------------------*/
-.item_amex .icon{
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    left: 50%;
-    top: 50%;;
-    margin-left: -50px;
-    margin-top: -50px;
-    border-radius: 15px;
-}
-.item_amex .name{
+/*------------------卡片------------------*/
+/*不同状态下，标题是否居中的变化*/
+.item_li .name{
     display: block;
     text-align: left;
     font-size: 15pt;
@@ -197,7 +188,9 @@ ul, li {
 .item_hiding .name{
     text-align: left;
 }
-.item_amex .item_footer{
+/*-----------文章标签与时间--------------*/
+
+.item_li .item_footer{
     position: absolute;
     top: 193px;
     font-size: 10pt;
@@ -206,11 +199,11 @@ ul, li {
     padding: 0 20px;
     text-align: right;
 }
-.item_amex .item_footer .tags{
+.item_li .item_footer .tags{
     display: none;
     position: absolute;
 }
-.item_amex .item_footer .tags a,.info_tips .tag{
+.item_li .item_footer .tags a,.info_tips .tag{
     display: inline-block;
     padding: 0 12px;
     line-height: 30px;
@@ -240,7 +233,9 @@ ul, li {
 .item_footer:hover .time time:first-child{
     display: block;
 }
-.item_amex .description{
+
+/*----------简介----------*/
+.item_li .description{
     position: relative;
     font-size: 12pt;
     padding: 0 24px;
@@ -249,7 +244,7 @@ ul, li {
     overflow: hidden;
     cursor: pointer;
 }
-.item_amex .description p{
+.item_li .description p{
     margin: 9px 0;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -258,19 +253,21 @@ ul, li {
 #blog_detail .description{
     display: none;
 }
-.item_amex .content{
+/*-----------------------------*/
+.item_li .content{
     position: relative;
     font-size: 12pt;
     padding: 0 40px 40px;
 }
-.item_amex .content img{
+.item_li .content img{
     max-width: 95%;
     text-align: center;
 }
-.item_amex .content .auth_info,.item_amex .content .auth_info a{
+.item_li .content .auth_info,.item_li .content .auth_info a{
     color: white;
 }
-.item_amex .btn_close{
+/* 不同状态下的关闭按钮是否显示*/
+.item_li .btn_close{
     position: absolute;
     right: 0;
     top: 0;
@@ -282,21 +279,18 @@ ul, li {
     font-size: 19px;
     overflow: hidden;
 }
-
-.item_amex .btn_home{
-    position: absolute;
-    left: 7px;
-    top: 6px;
-    background: white;
-    width: 65px;
-    text-align: center;
-    line-height: 31px;
-    border-radius: 13px;
-    cursor: pointer;
-    font-size: 19px;
+.btn_close{
+    display: none;
 }
 
-/*--------------------------*/
+.item_li .item_bg_fixed .btn_close{
+    display: block;
+}
+
+.item_li .item_hiding .btn_close{
+    display: none;
+}
+/*--------------------*/
 
 
 #blog_detail{
@@ -323,50 +317,7 @@ ul, li {
 }
 
 
-/*----------------------------------*/
-#side_list{
-    position: absolute;
-    left: 480px;
-    top: 0px;
-}
-
-#user_info{
-    padding: 30px;
-    background: white;
-}
-/*----------------------------------*/
-#top_bg{
-    width: 100%;
-    height: 80px;
-    background: white;
-    line-height: 80px;
-    margin-bottom: 30px;
-}
-
-#top_nav{
-    margin:0 auto;
-    position: relative;
-}
-#top_nav #icon_home{
-    padding: 0 30px;
-}
-#top_nav #btn_sideshow{
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 0 30px;
-    cursor: pointer;
-}
-
-#footer_body{
-    text-align: center;
-    color: rgb(169, 169, 169);
-    text-decoration: none;
-    font-size: small;
-    padding: 20px 30px 10px;
-}
-/*----------------------------------*/
+/*---------------自适应布局-------------------*/
 
 
 @media (max-width: 800px) {
@@ -398,7 +349,7 @@ ul, li {
     #side_list.side_show{
         left: 0;
     }
-    .item_amex .content{
+    .item_li .content{
         padding: 0 20px;
     }
 }
