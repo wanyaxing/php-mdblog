@@ -9,7 +9,7 @@
         $title = $_GET['tag'].' 的搜索结果';
     }
 ?>
-<?php if (!Utility::isAjax()): ?>
+<?php if (!MDBLOG_IS_AJAX): ?>
 <?php include __dir__ . '/header.php'; ?>
 <body>
     <?php include __dir__ . '/top.php'; ?>
@@ -29,7 +29,7 @@
         <?php if ($page * $size < $dirListInfo['countTotal']): ?>
             <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
         <?php endif ?>
-<?php if (!Utility::isAjax()): ?>
+<?php if (!MDBLOG_IS_AJAX): ?>
     </main>
     <?php include __dir__ . '/side.php'; ?>
     </div>

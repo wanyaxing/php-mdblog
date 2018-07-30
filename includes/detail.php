@@ -1,11 +1,6 @@
 <?php
 
-    include(MDBLOG_ROOT_PATH.'/includes/lib/Parsedown.php');
-
-    $title = 'Not Found';
-    $content = '';
-
-    $fTime = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
+    include_once(MDBLOG_ROOT_PATH.'/includes/lib/Parsedown.php');
 
     $mdInfo = Utility::getMdInfoOfFtime($fTime);
 
@@ -22,7 +17,7 @@
     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
     header("Pragma: no-cache"); // Date in the past
 
-    if (Utility::isAjax())
+    if (MDBLOG_IS_AJAX)
     {
         echo $html;
         return false;

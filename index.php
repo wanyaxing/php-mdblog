@@ -51,24 +51,25 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     $requestActions = explode('/',trim($relativePath,'/'));
 
     // 对操作数组进行分析
-    if ($requestActions[0]=='' || $requestActions[0]=='index.php')
-    {
-        include MDBLOG_ROOT_PATH.'/includes/list.php';
+    switch ($requestActions[0]) {
+        case '':
+        case 'index.php':
+            $includeFile = MDBLOG_ROOT_PATH.'/includes/list.php';
+            break;
+        case 'sitemap.txt':
+            $includeFile = MDBLOG_ROOT_PATH.'/includes/sitemap.txt.php';
+            break;
+        case 'feed.xml':
+            $includeFile = MDBLOG_ROOT_PATH.'/includes/feed.xml.php';
+            break;
+        default:
+            $fTime = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
+            $includeFile = MDBLOG_ROOT_PATH.'/includes/detail.php';
+            break;
     }
-    else if (preg_match('/^.*\.html$/',$requestActions[0]))
-    {
-        include MDBLOG_ROOT_PATH.'/includes/detail.php';
-    }
-    else if ($requestActions[0]=='sitemap.txt')
-    {
-        include MDBLOG_ROOT_PATH.'/includes/sitemap.txt.php';
-    }
-    else if ($requestActions[0]=='feed.xml')
-    {
-        include MDBLOG_ROOT_PATH.'/includes/feed.xml.php';
-    }
-    else
-    {
-        include MDBLOG_ROOT_PATH.'/includes/404.php';
-    }
+
+
+    define('MDBLOG_IS_AJAX',Utility::isAjax());
+
+    include $includeFile;
 
