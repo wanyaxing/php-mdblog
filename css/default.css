@@ -225,6 +225,9 @@ ul, li {
 .item_bg_fixed .item_footer .tags,#blog_detail .item_footer .tags{
     display: block;
 }
+.item_hiding .item_footer .tags{
+    display: none;
+}
 .item_footer .time time{
     display: none;
 }
