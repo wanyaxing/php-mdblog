@@ -51,7 +51,7 @@ ready(function(){
     function forEach(array, fn)
     {
         for (var i = 0; i < array.length; i++)
-        fn(array[i], i);
+        fn(i,array[i]);
     }
 
     function offset(el)
@@ -204,9 +204,9 @@ ready(function(){
             getLink(state.url+(state.url.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
                 _content.innerHTML = response;
                 addClass(_content,'content_load');
-                // forEach(_content.querySelectorAll('pre code'),function(i, block) {
-                //     hljs.highlightBlock(block);
-                // })
+                forEach(_content.querySelectorAll('pre code'),function(i, block) {
+                    hljs.highlightBlock(block);
+                })
             });
         }
 
