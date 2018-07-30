@@ -37,7 +37,7 @@
     </div>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/highlight/highlight.min.js"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.js?v=0724.2"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.min.js?v=0724.2"></script>
 <?php include __dir__ . '/footer.php'; ?>
 </body>
 </html>
