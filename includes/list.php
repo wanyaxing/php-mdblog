@@ -37,7 +37,7 @@
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/animejs/2.2.0/anime.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/highlight/highlight.min.js"></script>
 <script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.min.js?v=0724.1"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.min.js?v=0730.2"></script>
+<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/list.min.js?v=0730.3"></script>
 <?php include __dir__ . '/footer.php'; ?>
 </body>
 </html>

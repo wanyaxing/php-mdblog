@@ -8,7 +8,7 @@ $(function(){
         }
         $this.addClass('loading').html('加载中...');
         var link = $this.attr('href');
-        $.get(link).then(function(response){
+        $.get(link+(link.indexOf('?')>0?'&':'?')+'is_ajax=1').then(function(response){
             $this.fadeOut(function(){
                 if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', link]);}
                 $this.remove();
