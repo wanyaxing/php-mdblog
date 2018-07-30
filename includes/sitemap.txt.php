@@ -1,5 +1,4 @@
 <?php
-    header("Content-Type: text/plain");
     echo MDBLOG_ROOT_URL;
     echo "\n";
 
