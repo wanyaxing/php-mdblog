@@ -13,6 +13,7 @@ A blog which write with markdown which supported by php.
 * 支持编辑时间，默认按编辑时间排序。（2018年07月27日17:40:18新增）
 * 支持站点地图，支持 rss
 * 支持镜像空间设定，如七牛空间镜像，[链接](https://developer.qiniu.com/kodo/kb/1376/seven-cattle-image-storage-instruction-manuals)
+* 支持自动缓存，支持浏览器缓存互动，让 CPU 和 带宽 更低。
 
 ## 缺点（不会支持）
 * 不支持留言
