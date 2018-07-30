@@ -40,7 +40,7 @@ ready(function(){
             }
             if (!tNode.parentNode)
             {
-                return el;
+                return null;
             }
             tNode = tNode.parentNode;
         }
@@ -320,7 +320,7 @@ ready(function(){
         }
 
         /*展开详情*/
-        if (hasClass(el,'description') || hasClass(el,'name'))
+        if (hasClass(el,'name') || closest(el,'description')  )
         {
             itemShow(el,1);
             e.preventDefault();e.stopPropagation();
