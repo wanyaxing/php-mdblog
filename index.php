@@ -71,5 +71,12 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
     define('MDBLOG_IS_AJAX',Utility::isAjax());
 
-    include $includeFile;
+    if (!defined('MDBLOG_CACHE_DIR'))
+    {
+        include $includeFile;
+    }
+    else
+    {
+        //todo
+    }
 
