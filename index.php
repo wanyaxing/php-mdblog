@@ -75,6 +75,10 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
     if (!defined('MDBLOG_CACHE_DIR'))
     {
+        // 如果支持压缩，则压缩输出。
+        if(extension_loaded('zlib') && strstr($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip')){
+            ob_start('ob_gzhandler');
+        }
         include $includeFile;
     }
     else
