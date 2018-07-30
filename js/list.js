@@ -91,7 +91,7 @@ $(function(){
         }
         if (!$content.hasClass('content_load'))
         {
-            $.get(state.url).then(function(response){
+            $.get(state.url+(state.url.indexOf('?')>0?'&':'?')+'is_ajax=1').then(function(response){
                 $content.html(response).addClass('content_load');
                 $content.find('pre code').each(function(i, block) {
                     hljs.highlightBlock(block);

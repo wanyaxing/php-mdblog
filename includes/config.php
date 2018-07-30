@@ -12,9 +12,9 @@
     // define('MDBLOG_CDN_HOST','blog.example.com');
 
     // 设定缓存文件夹（如不设定则禁用缓存）
-    // 请确认该文件夹开启PHP读写权限
+    // 请实现创建好该文件夹并确认该文件夹开启了PHP读写权限
     // 请确认该文件夹禁止网站直接访问
-    // define('MDBLOG_CACHE_DIR',__dir__ . '/cahce');
+    define('MDBLOG_CACHE_DIR',__dir__ . '/cache');
 
     if (!isset($_SERVER['HTTP_HOST']) || $_SERVER['HTTP_HOST']=='127.0.0.1' || $_SERVER['HTTP_HOST']=='localhost' || strpos($_SERVER['HTTP_HOST'],'.local')!=false || preg_match('/^\d+\.\d+\.\d+\.\d+$/',$_SERVER['HTTP_HOST']))
     {//1是开发模式  2是正式环境

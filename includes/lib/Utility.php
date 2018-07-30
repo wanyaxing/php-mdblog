@@ -255,6 +255,32 @@ class Utility{
 
     }
 
+    public static function getMtimeOfFtime($fTime)
+    {
+        if (Utility::strtotime($fTime))
+        {
+            foreach (glob(MDBLOG_ROOT_PATH.'/post/*'.$fTime.'*/*.md') as $_file) {
+                return filemtime($_file);
+            }
+        }
+
+        return 0;
+
+    }
+
+    public static function getMtimeOfPost()
+    {
+        $mtime = 0;
+        foreach (glob(MDBLOG_ROOT_PATH.'/post/*/*.md') as $_file) {
+            $_mtime = filemtime($_file);
+            if ($mtime < $_mtime)
+            {
+                $mtime = $_mtime;
+            }
+        }
+        return $mtime;
+    }
+
     // 根据基础信息获取文章信息
     public static function getMdInfoOfDirInfo($dirInfo)
     {

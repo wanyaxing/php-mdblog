@@ -77,6 +77,57 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
     else
     {
-        //todo
+        $cacheKey = 'cache' . preg_replace('/[\.\/\?#-]/','_',$_SERVER['REQUEST_URI']);
+
+        if (isset($fTime))
+        {
+            $filemtime = Utility::getMtimeOfFtime($fTime);
+        }
+        else
+        {
+            $filemtime = Utility::getMtimeOfPost();
+        }
+
+        $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey ;
+
+        if (file_exists($cacheFile) && filemtime($cacheFile) > $filemtime )
+        {
+            $main_content = file_get_contents($cacheFile);
+        }
+        else
+        {
+            ob_start();
+            try {
+                include $includeFile;
+                $main_content = ob_get_clean();
+            } catch (Exception $e) {
+                $main_content = $e->getMessage();
+            }
+            file_put_contents($cacheFile, $main_content);
+        }
+
+        $cachemtime = filemtime($cacheFile);
+
+        $etag = $cachemtime;
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)//这里用Last-Modified的header标识来进行客户端的缓存控制。
+        {
+            header('Etag:'.$etag,true,304);
+            exit;
+        }
+        $eLastModified = gmdate('D, d M Y H:i:s GMT', $cachemtime);
+        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $_SERVER['HTTP_IF_MODIFIED_SINCE'] == $eLastModified)//这里用etag的header标识来进行客户端的缓存控制。
+        {
+            header('Last-Modified:'.$eLastModified,true,304);
+            exit;
+        }
+
+        header('Cache-Control:public');
+        header('Last-Modified:'.$eLastModified);
+        header('Keep-Alive:timeout=5, max=5');//设定过期时间，禁止只读缓存
+        // header('Expires:'.gmdate('D, d M Y H:i:s \G\M\T', $_time+3600));
+        header('Expires:'.gmdate('D, d M Y H:i:s GMT', $cachemtime+5));
+        header('Etag:'.$etag);
+
+        echo $main_content;
     }
 
