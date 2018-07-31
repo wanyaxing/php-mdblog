@@ -85,7 +85,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
     else
     {
-        $cacheKey = '_';
+        $cacheKey = MDBLOG_IS_AJAX . '_';
 
         if (isset($fTime))
         {
