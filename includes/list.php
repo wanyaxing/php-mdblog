@@ -1,12 +1,11 @@
 <?php
-    $page     = isset($_GET['page']) && Utility::is_int($_GET['page'])?$_GET['page']:1;
     $size     = MDBLOG_PAGE_SIZE;
 
-    $dirListInfo = Utility::getDirListInfo($page,$size,isset($_GET['tag'])?$_GET['tag']:null);
+    $dirListInfo = Utility::getDirListInfo($page,$size,$tag);
 
-    if (isset($_GET['tag']))
+    if (!is_null($tag))
     {
-        $title = $_GET['tag'].' 的搜索结果';
+        $title = $tag.' 的搜索结果';
     }
 ?>
 <?php if (!MDBLOG_IS_AJAX): ?>
@@ -15,7 +14,7 @@
     <?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
     <main id="blog_list">
-        <?php if (isset($_GET['tag'])): ?>
+        <?php if (!is_null($tag)): ?>
             <nav class="nav_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
         <?php endif ?>
 <?php endif ?>

@@ -54,6 +54,8 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     switch ($requestActions[0]) {
         case '':
         case 'index.php':
+            $page     = isset($_GET['page']) && Utility::is_int($_GET['page'])?$_GET['page']:1;
+            $tag      = isset($_GET['tag']) ? $_GET['tag']:null;
             $includeFile = MDBLOG_ROOT_PATH.'/includes/list.php';
             break;
         case 'sitemap.txt':
@@ -83,18 +85,29 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
     else
     {
-        $cacheKey = 'cache' . preg_replace('/[\.\/\?#-]/','_',$_SERVER['REQUEST_URI']);
+        $cacheKey = '';
+
+
 
         if (isset($fTime))
         {
+            $cacheKey .= $fTime;
             $filemtime = Utility::getMtimeOfFtime($fTime);
         }
         else
         {
+            if (isset($page,$tag))
+            {
+                 $cacheKey .= $requestActions[0] . '_' .$tag . '_' .$page;
+            }
+            else
+            {
+                $cacheKey .= $requestActions[0];
+            }
             $filemtime = Utility::getMtimeOfPost();
         }
 
-        $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey ;
+        $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '.cache' ;
 
         // 如果文件修改时间在缓存文件之前，说明缓存文件可用。否则重新生成。
         if (file_exists($cacheFile) && filemtime($cacheFile) > $filemtime )
