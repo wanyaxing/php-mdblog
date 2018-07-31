@@ -39,14 +39,6 @@ h1{
     margin:0;
 }
 
-div, ul, li {
-    margin: 0;
-    padding: 0;
-}
-ul, li {
-    list-style: none outside none;
-}
-
 /*--------------顶部 侧栏 与 底部--------------------*/
 
 #top_bg{
