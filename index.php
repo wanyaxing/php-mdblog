@@ -85,9 +85,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
     else
     {
-        $cacheKey = '';
-
-
+        $cacheKey = '_';
 
         if (isset($fTime))
         {
