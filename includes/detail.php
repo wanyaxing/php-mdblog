@@ -13,10 +13,6 @@
 
     $html .= sprintf('<p class="auth_info" title="转载注明来源即可">原文来自%s：<a href="%s">%s</a></p>',MDBLOG_TITLE,$mdInfo['url'],$mdInfo['url']);
 
-    header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0"); // HTTP/1.1
-    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-    header("Pragma: no-cache"); // Date in the past
-
     if (MDBLOG_IS_AJAX)
     {
         echo $html;
