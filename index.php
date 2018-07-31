@@ -105,6 +105,8 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
             $filemtime = Utility::getMtimeOfPost();
         }
 
+        $cacheKey = preg_replace('/[\.\/\\\?#\-\:\s\*]/','_',$cacheKey);
+
         $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '.cache' ;
 
         // 如果文件修改时间在缓存文件之前，说明缓存文件可用。否则重新生成。

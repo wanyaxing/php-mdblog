@@ -135,7 +135,7 @@ class Utility{
     {
         if (isset($tag))
         {
-            if (preg_match('/[* .\/\\\?]/',$tag))
+            if (preg_match('/[\.\/\\\?#\-\:\s\*]/',$tag))
             {
                 Utility::exit404();
             }
