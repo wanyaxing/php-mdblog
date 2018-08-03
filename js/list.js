@@ -1,5 +1,5 @@
 // thanks [YOU MIGHT NOT NEED JQUERY](http://youmightnotneedjquery.com/)
-
+if (document.getElementById('blog_list'))
 ready(function(){
 
     function hasClass(el,className)
