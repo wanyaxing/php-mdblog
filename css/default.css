@@ -143,7 +143,12 @@ h1{
     height: 100%;
     z-index: 1;
     overflow: auto;
+    background-color: #f4f4f4;
     -webkit-overflow-scrolling: touch;
+}
+
+.item_li .item_hiding{
+    background-color: transparent;
 }
 
 /*--------列表页-------*/
@@ -261,7 +266,7 @@ h1{
 }
 /* 不同状态下的关闭按钮是否显示*/
 .item_li .btn_close{
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     width: 51px;

@@ -215,8 +215,10 @@ ready(function(){
         position.top = position.top - (document.body.scrollTop + document.documentElement.scrollTop);
         _position = position;
 
-        // body禁止滚动
+        // body禁止滚动前，记录位置信息
         _scrollTop = document.scrollingElement.scrollTop;
+        var listOffset = offset(document.getElementById('blog_list'));
+        var listWidth = document.getElementById('blog_list').offsetWidth;
         var bodyWidth = document.body.offsetWidth;
         addClass(document.body,'body-prevent-class');
         document.body.style.top = -_scrollTop + 'px';
@@ -239,8 +241,8 @@ ready(function(){
             targets: _bodyli,
             scale: 1,
             top:0,
-            left:offset(document.getElementById('blog_list')).left,
-            width:document.getElementById('blog_list').offsetWidth+'px',
+            left:listOffset.left,
+            width:listWidth+'px',
             height: [
                 {
                     value:'256px',
@@ -260,6 +262,9 @@ ready(function(){
             duration:800,
             complete: function(anim) {
                 _bodyli.style.height = 'auto';
+                _bodyli.style.transform = '';
+                var _btnClose = _bodyli.querySelector('.btn_close');
+                _btnClose.style.left = (listOffset.left + listWidth - _btnClose.offsetWidth) +'px';
                 removeClass(_this,'item_showing')
                 if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', window.location.href]);}
             }
@@ -283,6 +288,11 @@ ready(function(){
 
         var position = _position;
 
+        //  body 恢复滚动
+        removeClass(document.body,'body-prevent-class')
+        document.body.style.top    = '';
+        document.body.style.width  = '';
+        document.scrollingElement.scrollTop =  _scrollTop;
 
         anime.remove(_bodyli);
         anime({
@@ -300,11 +310,6 @@ ready(function(){
                 _bodyli.style.left   = '';
                 _bodyli.style.width  = '';
                 _bodyli.style.height = '';
-                //  body 恢复滚动
-                removeClass(document.body,'body-prevent-class')
-                document.body.style.top    = '';
-                document.body.style.width  = '';
-                document.scrollingElement.scrollTop =  _scrollTop;
                 if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', window.location.href]);}
             }
         });
