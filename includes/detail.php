@@ -31,8 +31,6 @@
         </main>
         <?php include __dir__ . '/side.php'; ?>
     </div>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/lib/highlight/highlight.min.js"></script>
-<script type="text/javascript" src="<?=MDBLOG_CDN_URL?>/js/default.min.js?v=0724.4"></script>
 <?php include __dir__ . '/footer.php'; ?>
 </body>
 </html>
