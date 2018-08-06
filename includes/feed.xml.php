@@ -7,7 +7,7 @@ print('<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
         <title><![CDATA['.MDBLOG_TITLE.']]></title>
-        <link><![CDATA['.MDBLOG_ROOT_URL.']]></link>
+        <link><![CDATA['.MDBLOG_ROOT_URL . '/'.']]></link>
         <description><![CDATA['.MDBLOG_HOME_DESCRIPTION.']]>
         </description>
         <pubDate>'.(count($dirListInfo['currentList'])>0?date(DATE_RSS,Utility::strtotime($dirListInfo['currentList'][0]['fTimeModified'])):date(DATE_RSS)).'</pubDate>
