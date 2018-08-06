@@ -9,6 +9,8 @@
     //七牛CDN镜像域名，
     //简单的说，该域名下的所有资源自动读取源站资源进行分发，
     //https://developer.qiniu.com/kodo/kb/1376/seven-cattle-image-storage-instruction-manuals
+    //注意，镜像空间的设定要直接指向当前博客的所在目录，而不是当前博客的域名。
+    //即 blog.example.com 应该指向 http://www.example.com/blog/
     // define('MDBLOG_CDN_HOST','blog.example.com');
     // 镜像域名的 url 组织模板，如有些空间可以在 url 中添加参数来支持对图片进行二次处理，此处用来约定 url 的组织形式
     // %s 为资源文件相对于根目录的路径
@@ -69,7 +71,7 @@
     }
     else
     {
-        define('MDBLOG_CDN_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.MDBLOG_CDN_HOST.MDBLOG_ROOT_URI   );
+        define('MDBLOG_CDN_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.MDBLOG_CDN_HOST   );
     }
 
     // 从当前请求子路径中移除博客所在URL路径，则获得当前请求中相对博客的操作 如 /blog/2 得 /2通常是翻页
