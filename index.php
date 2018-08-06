@@ -8,45 +8,8 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
 
     include(__dir__.'/includes/config.php');
-    include(__dir__.'/includes/lib/Utility.php');
+    include(MDBLOG_ROOT_PATH.'/includes/lib/Utility.php');
 
-    // 博客所在根目录
-    define('MDBLOG_ROOT_PATH',__dir__);
-
-    // 当前请求的子路径（不含域名和参数）
-    $requestPath = preg_replace ("/(\/*[\?#].*$|[\?#].*$|\/*$|\.\.+)/", '', $_SERVER['REQUEST_URI']);
-    $requestPath = preg_replace('/\/+/','/',$requestPath);
-
-    // 博客所在根路径（注：不是网站根目录）
-    $mdblogRootUri = preg_replace ("/\/[^\/]*$/", '', $_SERVER['PHP_SELF']);
-    while($mdblogRootUri!='')
-    {
-        if (strpos($requestPath,$mdblogRootUri)===0)
-        {
-            break;
-        }
-        $mdblogRootUri = preg_replace('/^\/[^\/]+/','',$mdblogRootUri);
-    }
-    define('MDBLOG_ROOT_URI',$mdblogRootUri);
-
-
-
-    // 博客根路径绝对地址（用于静态化网址）
-    define('MDBLOG_ROOT_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.$_SERVER['HTTP_HOST'].MDBLOG_ROOT_URI   );
-
-    // 博客所在URL根路径（比如xxx.com/blog)
-    if (!defined('MDBLOG_CDN_HOST') || MDBLOG_DEPLOY_STATUS==1)
-    {// 相对路径
-        define('MDBLOG_CDN_URL','.' );
-    }
-    else
-    {
-        define('MDBLOG_CDN_URL',(strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https').'://'.MDBLOG_CDN_HOST.MDBLOG_ROOT_URI   );
-    }
-
-
-    // 从当前请求子路径中移除博客所在URL路径，则获得当前请求中相对博客的操作 如 /blog/2 得 /2通常是翻页
-    $relativePath = substr($requestPath,strlen(MDBLOG_ROOT_URI));
     // 将操作分成数组
     $requestActions = explode('/',trim($relativePath,'/'));
 

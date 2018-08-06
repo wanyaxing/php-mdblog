@@ -1,0 +1,7 @@
+#### 启动重写引擎
+RewriteEngine On
+
+RewriteRule . index.php [L]
+
+
+

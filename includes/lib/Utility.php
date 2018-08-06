@@ -370,4 +370,38 @@ class Utility{
         return isset($headers['X-Requested-With']) && $headers['X-Requested-With']=='XMLHttpRequest';
     }
 
+    public static function download($filePath)
+    {
+        if (!file_exists($filePath))
+        {
+            header( 'HTTP/1.1 404 Not Found' );
+            exit;
+        }
+
+        $filename =  preg_replace('/^(.+)\/(.*?)$/','$2',$filePath);
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        $ua = $_SERVER["HTTP_USER_AGENT"];
+        if (preg_match('/MSIE/', $ua)) {
+            header('Content-Disposition: attachment; filename="' .
+                rawurlencode($filename) . '"');
+        } elseif (preg_match("/Firefox/", $ua)) {
+            header('Content-Disposition: attachment; filename*="utf8\'\'' .
+                $filename . '"');
+        } else {
+            header('Content-Disposition: attachment; filename="' .
+                $filename . '"');
+        }
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($filePath));
+
+        set_time_limit(300);  // 避免下载超时
+        ob_end_clean();  // 避免大文件导致超过 memory_limit 限制
+        readfile($filePath);
+    }
+
 }
