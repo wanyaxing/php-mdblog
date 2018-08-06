@@ -317,7 +317,14 @@ class Utility{
         $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
             $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['dirName'] .'/' . $matches[2]);
             $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
-            $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
+            if (defined('MDBLOG_CDN_FORMAT'))
+            {
+                $imgFileUrl = sprintf(MDBLOG_CDN_FORMAT,$imgFileRelativePath);
+            }
+            else
+            {
+                $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
+            }
             return $matches[1] . $imgFileUrl . $matches[3] ;
         },$html);
 
