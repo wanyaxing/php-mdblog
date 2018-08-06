@@ -10,10 +10,6 @@
 
     if (defined('PHP_AUTH_USER') && defined('PHP_AUTH_PW'))
     {
-        if (count($requestActions)<5)
-        {
-            Utility::exit404('Not Found');
-        }
         $PHP_AUTH_USER = array_shift($requestActions);
         $PHP_AUTH_PW = array_shift($requestActions);
         if (PHP_AUTH_USER != $PHP_AUTH_USER || PHP_AUTH_PW != $PHP_AUTH_PW)
