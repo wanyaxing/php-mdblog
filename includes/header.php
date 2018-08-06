@@ -11,5 +11,5 @@
 <meta name="format-detection" content="email=no">
 <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
 <link rel="alternate" type="application/rss+xml" title="<?= MDBLOG_TITLE ?>" href="./feed.xml" />
-<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.mix.css?v=0806.1">
+<link rel="stylesheet" href="<?=MDBLOG_CDN_URL?>/css/default.mix.css?v=0806.2">
 </head>
