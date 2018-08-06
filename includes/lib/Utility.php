@@ -387,24 +387,28 @@ class Utility{
 
         $filename =  preg_replace('/^(.+)\/(.*?)$/','$2',$filePath);
 
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        $ua = $_SERVER["HTTP_USER_AGENT"];
-        if (preg_match('/MSIE/', $ua)) {
-            header('Content-Disposition: attachment; filename="' .
-                rawurlencode($filename) . '"');
-        } elseif (preg_match("/Firefox/", $ua)) {
-            header('Content-Disposition: attachment; filename*="utf8\'\'' .
-                $filename . '"');
-        } else {
-            header('Content-Disposition: attachment; filename="' .
-                $filename . '"');
+        $ext = preg_replace('/(.*)\.([^\.]+)$/','$2',$filename);
+
+        switch ($ext) {
+            case 'css':
+                header('Content-Type: text/css');
+                break;
+            case 'js':
+                header('Content-Type: application/x-javascript');
+                break;
+            case 'md':
+                header('Content-Type: text/markdown');
+                break;
+            case 'jpg':
+            case 'png':
+            case 'gif':
+                header('Content-Type: image/'.$ext);
+                break;
+            default:
+                header('Content-Type: application/octet-stream');
+                break;
         }
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($filePath));
+
 
         set_time_limit(300);  // 避免下载超时
         ob_end_clean();  // 避免大文件导致超过 memory_limit 限制
