@@ -323,7 +323,7 @@ class Utility{
             }
             else
             {
-                $imgFileUrl = MDBLOG_CDN_URL . $imgFileRelativePath;
+                $imgFileUrl = '.' . $imgFileRelativePath;
             }
             return $matches[1] . $imgFileUrl . $matches[3] ;
         },$html);
