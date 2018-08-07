@@ -57,7 +57,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
         }
         else
         {
-            if (isset($page,$tag))
+            if (isset($page))
             {
                  $cacheKey .= $requestActions[0] . '_' .$tag . '_' .$page;
             }
