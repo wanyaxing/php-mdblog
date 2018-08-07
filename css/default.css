@@ -196,6 +196,9 @@ h1{
     padding: 0 20px;
     text-align: right;
 }
+.item_showing .item_footer{
+    display: none;
+}
 .item_li .item_footer .tags{
     display: none;
     position: absolute;
@@ -215,14 +218,14 @@ h1{
 .item_bg_fixed .item_footer .tags,#blog_detail .item_footer .tags{
     display: block;
 }
-.item_hiding .item_footer .tags{
-    display: none;
-}
 .item_li .item_footer .view{
     display: none;
 }
 .item_bg_fixed .item_footer .view,#blog_detail .item_footer .view{
     display: inline-block;
+}
+.item_hiding .item_footer .tags,.item_hiding .item_footer .view{
+    display: none;
 }
 .item_li .item_footer .time{
     display: inline-block;
