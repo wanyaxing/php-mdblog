@@ -278,7 +278,7 @@ class Utility{
             }
             if (isset($mdDir))
             {
-                $mdViewFile = $mdDir . '/' . 'md_pv.txt';
+                $mdViewFile = $mdDir . '/' . 'md_pv.log';
                 file_put_contents($mdViewFile,"\n",FILE_APPEND);
                 return filesize($mdViewFile);
             }
@@ -293,7 +293,7 @@ class Utility{
         $siteDir = MDBLOG_ROOT_PATH.'/post';
         if (is_dir($siteDir))
         {
-            $siteViewFile = $siteDir . '/' . 'site_pv.txt';
+            $siteViewFile = $siteDir . '/' . 'site_pv.log';
             file_put_contents($siteViewFile,"\n",FILE_APPEND);
             return filesize($siteViewFile);
         }
