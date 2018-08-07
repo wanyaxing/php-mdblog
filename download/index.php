@@ -23,7 +23,7 @@
 
     $firstDir = array_shift($requestActions);
 
-    if ($firstDir!='post' && $firstDir!='css' && $firstDir!='js')
+    if ($firstDir!='post')
     {
         Utility::exit404('Not Found');
     }
