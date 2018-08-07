@@ -265,7 +265,40 @@ class Utility{
         }
 
         return 0;
+    }
 
+    // 详情阅读数+1
+    public static function getMdViewOfFtime($fTime)
+    {
+        if (Utility::strtotime($fTime))
+        {
+            foreach (glob(MDBLOG_ROOT_PATH.'/post/*'.$fTime.'*',GLOB_ONLYDIR) as $_dir) {
+                $mdDir = $_dir;
+                break;
+            }
+            if (isset($mdDir))
+            {
+                $mdViewFile = $mdDir . '/' . 'md_pv.txt';
+                file_put_contents($mdViewFile,"\n",FILE_APPEND);
+                return filesize($mdViewFile);
+            }
+        }
+
+        return 0;
+    }
+
+    // 整站阅读数+1
+    public static function getSiteView()
+    {
+        $siteDir = MDBLOG_ROOT_PATH.'/post';
+        if (is_dir($siteDir))
+        {
+            $siteViewFile = $siteDir . '/' . 'site_pv.txt';
+            file_put_contents($siteViewFile,"\n",FILE_APPEND);
+            return filesize($siteViewFile);
+        }
+
+        return 0;
     }
 
     public static function getMtimeOfPost()
@@ -354,6 +387,7 @@ class Utility{
                                     <a href="./?tag=<?= urlencode($tag) ?>"><?= $tag ?></a>
                                 <?php endforeach ?>
                             </div>
+                            </span>
                             <div class="time">
                                 <time class="time_created" pubdate="<?= date(DATE_ATOM,$mdInfo['fTimeCreated']) ?>">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></time>
                                 <?php if ($mdInfo['fTimeModified'] != $mdInfo['fTimeCreated']): ?>
