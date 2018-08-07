@@ -387,6 +387,8 @@ class Utility{
                                     <a href="./?tag=<?= urlencode($tag) ?>"><?= $tag ?></a>
                                 <?php endforeach ?>
                             </div>
+                            <span class="view">
+                                <span>阅读数：<span class="md_pv" f_time="<?= $mdInfo['fTime'] ?>"></span></span>
                             </span>
                             <div class="time">
                                 <time class="time_created" pubdate="<?= date(DATE_ATOM,$mdInfo['fTimeCreated']) ?>">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></time>
