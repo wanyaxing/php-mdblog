@@ -29,6 +29,10 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
             header('Content-Type:application/xml');
             $includeFile = MDBLOG_ROOT_PATH.'/includes/feed.xml.php';
             break;
+        case 'pv':
+            include MDBLOG_ROOT_PATH.'/includes/pv.php';
+            exit;
+            break;
         default:
             $fTime = urldecode(preg_replace('/\.html$/','',$requestActions[0]));
             $includeFile = MDBLOG_ROOT_PATH.'/includes/detail.php';

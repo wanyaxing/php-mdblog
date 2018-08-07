@@ -19,29 +19,46 @@ ready(function(){
         fn(i,array[i]);
     }
 
-    function xhrLink(link,callback)
+    function xhrRequest(method,link,data,callback)
     {
         var request = new XMLHttpRequest();
-        request.open('GET', link, true);
+        request.open(method, link, true);
+        if (method=='POST')
+        {
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        }
 
-        request.onreadystatechange = function() {
-            if (this.readyState === 4) {
-            if (this.status >= 200 && this.status < 400) {
-                // Success!
-                callback(this.responseText);
-            } else {
-                // Error :(
-            }
+        request.onreadystatechange = function()
+        {
+            if (this.readyState === 4)
+            {
+                if (this.status >= 200 && this.status < 400)
+                {
+                    // Success!
+                    callback(this.responseText);
+                }
+                else
+                {
+                    // Error :(
+                }
             }
         };
 
-        request.send();
+        request.send(data);
         request = null;
+    }
+    function xhrGet(link,callback)
+    {
+        xhrRequest('GET',link,null,callback);
+    }
+    function xhrPost(link,data,callback)
+    {
+        xhrRequest('POST',link,data,callback);
     }
 
     function updateBlogView()
     {
-        xhrLink('./pv.php?f_time=&time='+(new Date().getTime()),function(responseText){
+        xhrPost('./pv','',function(responseText){
             forEach(document.querySelectorAll('.blog_pv'),function(i,_this){
                 _this.innerHTML = responseText;
             });
@@ -52,7 +69,7 @@ ready(function(){
     {
         forEach(_targetNode.querySelectorAll('.md_pv'),function(i,_this){
             var f_time = _this.getAttribute('f_time');
-            xhrLink('./pv.php?f_time='+encodeURI(f_time)+'&time='+(new Date().getTime()),function(responseText){
+            xhrPost('./pv','f_time='+encodeURI(f_time)+'&time='+(new Date().getTime()),function(responseText){
                 _this.innerHTML = responseText.split(',')[1];
                 var blogPv = responseText.split(',')[0];
                 forEach(document.querySelectorAll('.blog_pv'),function(i,_this){
@@ -192,7 +209,7 @@ ready(function(){
         el.innerHTML = '加载中...';
 
         var link = el.getAttribute('href');
-        xhrLink(link+(link.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
+        xhrGet(link+(link.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
             el.style.display = 'none';
             if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', link]);}
             updateBlogView();//整站 pv +1
@@ -277,7 +294,7 @@ ready(function(){
         }
         if (!hasClass(_content,'content_load'))
         {
-            xhrLink(state.url+(state.url.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
+            xhrGet(state.url+(state.url.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
                 _content.innerHTML = response;
                 addClass(_content,'content_load');
                 forEach(_content.querySelectorAll('pre code'),function(i, block) {
