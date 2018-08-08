@@ -28,7 +28,7 @@
         Utility::exit404('Not Found');
     }
 
-    $filePath = MDBLOG_ROOT_PATH . '/' .$firstDir .'/'. implode('/',$requestActions);
+    $filePath = MDBLOG_ROOT_PATH . '/' .$firstDir .'/'. urldecode(implode('/',$requestActions));
 
     Utility::download($filePath);
 

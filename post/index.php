@@ -11,7 +11,7 @@
         exit;
     }
 
-    $filePath = MDBLOG_ROOT_PATH . $relativePath;
+    $filePath = MDBLOG_ROOT_PATH . urldecode($relativePath);
 
     Utility::download($filePath);
 
