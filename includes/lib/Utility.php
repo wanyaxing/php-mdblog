@@ -425,7 +425,7 @@ class Utility{
 
         $ext = preg_replace('/(.*)\.([^\.]+)$/','$2',$filename);
 
-        switch ($ext) {
+        switch (strtolower($ext)) {
             case 'css':
                 header('Content-Type: text/css');
                 break;
