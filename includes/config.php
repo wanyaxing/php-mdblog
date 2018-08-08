@@ -15,6 +15,10 @@
     // %s 为资源文件相对于根目录的路径
     // define('MDBLOG_CDN_FORMAT','http://blog.example.com/%s-default_water');
 
+    // 设定大于该值的文件资源才会走镜像，小于该字节数的资源直接走本地
+    // 一般用来过滤本地的小图或表情之类的资源，如果走镜像，则有可能被加水印破坏。
+    define('MDBLOG_CDN_MINSIZE',0);
+
 
     // 使用HTTP基本认证保护文件区
     // 通常和上面的镜像域名一起使用，
