@@ -3,16 +3,15 @@
     include(__dir__.'/../includes/config.php');
     include(MDBLOG_ROOT_PATH.'/includes/lib/Utility.php');
 
-    $isAuthed = false;
+    $isAuthed = true;
 
     $filePath = MDBLOG_ROOT_PATH . urldecode($relativePath);
 
-    if (defined('MDBLOG_CDN_MINSIZE') && filesize($filePath) <= MDBLOG_CDN_MINSIZE)
+    if (defined('MDBLOG_CDN_MINSIZE') && defined('MDBLOG_CDN_FORMAT') && filesize($filePath) > MDBLOG_CDN_MINSIZE)
     {
-        $isAuthed = true;
+        $isAuthed = false;
     }
-
-    if (!$isAuthed && defined('PHP_AUTH_USER') && defined('PHP_AUTH_PW') && (!isset($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER']!=PHP_AUTH_USER || $_SERVER['PHP_AUTH_PW']!=PHP_AUTH_PW) )
+    else if (defined('PHP_AUTH_USER') && defined('PHP_AUTH_PW') && (!isset($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER']!=PHP_AUTH_USER || $_SERVER['PHP_AUTH_PW']!=PHP_AUTH_PW) )
     {
         $isAuthed = false;
     }
