@@ -358,7 +358,17 @@ class Utility{
             {
                 $imgFileUrl = '.' . $imgFileRelativePath;
             }
-            return $matches[1] . $imgFileUrl . $matches[3] ;
+
+            $str = $matches[1] . $imgFileUrl . $matches[3] ;
+
+            // 支持@2x @3x图片的显示设定
+            $xNumber = preg_replace('/.*\/[^\/]*\@(\d)x\.\w/','$1',$matches[2]);
+            if ($xNumber > 0)
+            {
+                $str .= sprintf(' srcset="%s %dx"',$imgFileUrl,$xNumber);
+            }
+
+            return $str;
         },$html);
 
         return $html;

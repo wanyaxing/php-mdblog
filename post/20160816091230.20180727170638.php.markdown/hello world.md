@@ -7,3 +7,5 @@
 ```php
     print('hello world');
 ```
+
+![欢迎@2x.png](./欢迎@2x.png)
