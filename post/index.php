@@ -7,9 +7,12 @@
 
     $filePath = MDBLOG_ROOT_PATH . urldecode($relativePath);
 
-    if (defined('MDBLOG_CDN_MINSIZE') && defined('MDBLOG_CDN_FORMAT') && filesize($filePath) > MDBLOG_CDN_MINSIZE)
+    if (defined('MDBLOG_CDN_MINSIZE') && defined('MDBLOG_CDN_FORMAT'))
     {
-        $isAuthed = false;
+        if (filesize($filePath) > MDBLOG_CDN_MINSIZE)
+        {
+            $isAuthed = false;
+        }
     }
     else if (defined('PHP_AUTH_USER') && defined('PHP_AUTH_PW') && (!isset($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER']!=PHP_AUTH_USER || $_SERVER['PHP_AUTH_PW']!=PHP_AUTH_PW) )
     {
