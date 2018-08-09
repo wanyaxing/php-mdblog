@@ -17,7 +17,7 @@
 
     // 设定大于该值的文件资源才会走镜像，小于该字节数的资源直接走本地
     // 一般用来过滤本地的小图或表情之类的资源，如果走镜像，则有可能被加水印破坏。
-    define('MDBLOG_CDN_MINSIZE',0);
+    // define('MDBLOG_CDN_MINSIZE',0);
 
 
     // 使用HTTP基本认证保护文件区
@@ -31,7 +31,7 @@
     // 设定缓存文件夹（如不设定则禁用缓存）
     // 请实现创建好该文件夹并确认该文件夹开启了PHP读写权限
     // 请确认该文件夹禁止网站直接访问
-    define('MDBLOG_CACHE_DIR',__dir__ . '/cache');
+    // define('MDBLOG_CACHE_DIR',__dir__ . '/cache');
 
     if (!isset($_SERVER['HTTP_HOST']) || $_SERVER['HTTP_HOST']=='127.0.0.1' || $_SERVER['HTTP_HOST']=='localhost' || strpos($_SERVER['HTTP_HOST'],'.local')!=false || preg_match('/^\d+\.\d+\.\d+\.\d+$/',$_SERVER['HTTP_HOST']))
     {//1是开发模式  2是正式环境
