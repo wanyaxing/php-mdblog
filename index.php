@@ -30,6 +30,7 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
             $includeFile = MDBLOG_ROOT_PATH.'/includes/feed.xml.php';
             break;
         case 'pv':
+            // pv 直接操作，并结束进程。
             include MDBLOG_ROOT_PATH.'/includes/pv.php';
             exit;
             break;
@@ -76,11 +77,40 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
         $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '.cache' ;
 
-        // 如果文件修改时间在缓存文件之前，说明缓存文件可用。否则重新生成。
-        if (file_exists($cacheFile) && filemtime($cacheFile) > $filemtime )
+        $isNeedReload = true;
+
+        if (file_exists($cacheFile) )
         {
+            // 有缓存意味着可以使用缓存，除非。。。
+            // 如果文件修改时间在缓存文件之前，说明缓存文件可用。
+            if (isset($filemtime) && filemtime($cacheFile) > $filemtime)
+            {
+                $isNeedReload = false;
+            }
+            else
+            {//判断是否需要重新生成缓存。
+                $isNeedReload = true;
+
+                // // 使用缓存时，是否启用缓存锁功能，可用于防止缓存并发，小型站点可以不用开启，几乎用不到。
+                // $cacheLockFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '_lock.cache' ;
+                // if (file_exists($cacheLockFile))
+                // {
+                //     $isNeedReload = false;
+                //     //如果存在缓存锁，则意味着有其他用户正在生成缓存，当前用户仍使用旧缓存，防止并发。
+                //     // 如果缓存锁存在超过30秒，则删掉该缓存锁，让下一个用户重新生成缓存。
+                //     if (time() - filemtime($cacheFile) > 30)
+                //     {
+                //         unlink($cacheLockFile);
+                //     }
+                // }
+                // else
+                // {
+                //     file_put_contents($cacheLockFile, time());
+                // }
+            }
         }
-        else
+
+        if ($isNeedReload)
         {
             ob_start();
             try {
@@ -90,6 +120,11 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
                 $main_content = $e->getMessage();
             }
             file_put_contents($cacheFile, $main_content);
+            //重新生成缓存后，移除缓存锁
+            // if (isset($cacheLockFile) && file_exists($cacheLockFile))
+            // {
+            //     unlink($cacheLockFile);
+            // }
         }
 
         $cachemtime = filemtime($cacheFile);
