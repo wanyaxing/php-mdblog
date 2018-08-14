@@ -350,9 +350,14 @@ class Utility{
         $html = preg_replace_callback('/(<img src=")(\..*?)(")/',function($matches){
             $imgFilePath = realpath(MDBLOG_ROOT_PATH . '/post/' . $GLOBALS['dirName'] .'/' . $matches[2]);
             $imgFileRelativePath = str_replace(MDBLOG_ROOT_PATH,'',$imgFilePath);
-            if (defined('MDBLOG_CDN_FORMAT') && (!defined('MDBLOG_CDN_MINSIZE') || filesize($imgFilePath)>MDBLOG_CDN_MINSIZE))
+            $filesize = filesize($imgFilePath);
+            if (defined('MDBLOG_CDN_FORMAT') && (!defined('MDBLOG_CDN_MINSIZE') || $filesize>MDBLOG_CDN_MINSIZE))
             {
                 $imgFileUrl = sprintf(MDBLOG_CDN_FORMAT,$imgFileRelativePath);
+            }
+            else if ($filesize < 10240)
+            {
+                $imgFileUrl = static::base64OfImage($imgFilePath);
             }
             else
             {
@@ -365,7 +370,8 @@ class Utility{
             $xNumber = preg_replace('/.*\/[^\/]*\@(\d)x\.\w/','$1',$matches[2]);
             if ($xNumber > 0)
             {
-                $str .= sprintf(' srcset="%s %dx"',$imgFileUrl,$xNumber);
+                list($width, $height, $type, $attr) = getimagesize($imgFilePath);
+                $str .= sprintf(' width="%dpx"',$width/$xNumber);
             }
 
             return $str;
@@ -459,6 +465,15 @@ class Utility{
         set_time_limit(300);  // 避免下载超时
         ob_end_clean();  // 避免大文件导致超过 memory_limit 限制
         readfile($filePath);
+    }
+
+    public static function base64OfImage($imagePath)
+    {
+        // Read image path, convert to base64 encoding
+        $imageData = base64_encode(file_get_contents($imagePath));
+
+        // Format the image SRC:  data:{mime};base64,{data};
+        return 'data: '.mime_content_type($imagePath).';base64,'.$imageData;
     }
 
 }
