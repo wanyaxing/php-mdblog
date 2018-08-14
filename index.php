@@ -58,7 +58,6 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
         if (isset($fTime))
         {
             $cacheKey .= $fTime;
-            $filemtime = Utility::getMtimeOfFtime($fTime);
         }
         else
         {
@@ -77,37 +76,48 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
 
         $cacheFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '.cache' ;
 
+        // 默认是需要重载的
         $isNeedReload = true;
 
         if (file_exists($cacheFile) )
         {
-            // 有缓存意味着可以使用缓存，除非。。。
-            // 如果文件修改时间在缓存文件之前，说明缓存文件可用。
-            if (isset($filemtime) && filemtime($cacheFile) > $filemtime)
+            // 有缓存意味着可以使用缓存
+            if (isset($fTime))
             {
-                $isNeedReload = false;
+                $filemtime = Utility::getMtimeOfFtime($fTime);
+                // 如果缓存时间比文件时间新，就不需要重载
+                if (filemtime($cacheFile) > $filemtime)
+                {
+                    $isNeedReload = false;
+                }
             }
             else
-            {//判断是否需要重新生成缓存。
-                $isNeedReload = true;
-
-                // // 使用缓存时，是否启用缓存锁功能，可用于防止缓存并发，小型站点可以不用开启，几乎用不到。
-                // $cacheLockFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '_lock.cache' ;
-                // if (file_exists($cacheLockFile))
-                // {
-                //     $isNeedReload = false;
-                //     //如果存在缓存锁，则意味着有其他用户正在生成缓存，当前用户仍使用旧缓存，防止并发。
-                //     // 如果缓存锁存在超过30秒，则删掉该缓存锁，让下一个用户重新生成缓存。
-                //     if (time() - filemtime($cacheFile) > 30)
-                //     {
-                //         unlink($cacheLockFile);
-                //     }
-                // }
-                // else
-                // {
-                //     file_put_contents($cacheLockFile, time());
-                // }
+            {
+                // 如果有更新的文件，则需要重载。
+                $isNeedReload = Utility::isAnyPostNewer(filemtime($cacheFile));
             }
+
+            // // 使用缓存时，启用缓存锁功能，可用于防止缓存并发，小型站点可以不用开启，几乎用不到。
+            // // 就算重载也不是人人都能重载，只允许第一个发现需要重载的人去重载。
+            // // 因为会有缓存锁的IO 操作，所以如果没有并发情况，那么就不用开启这个功能，所以注释掉。
+            // if ($isNeedReload)
+            // {
+            //     $cacheLockFile = MDBLOG_CACHE_DIR . '/' . $cacheKey . '_lock.cache' ;
+            //     if (file_exists($cacheLockFile))
+            //     {
+            //         $isNeedReload = false;
+            //         //如果存在缓存锁，则意味着有其他用户正在生成缓存，当前用户仍使用旧缓存，防止并发。
+            //         // 如果缓存锁存在超过30秒，则删掉该缓存锁，让下一个用户重新生成缓存。
+            //         if (time() - filemtime($cacheFile) > 30)
+            //         {
+            //             unlink($cacheLockFile);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         file_put_contents($cacheLockFile, time());
+            //     }
+            // }
         }
 
         if ($isNeedReload)

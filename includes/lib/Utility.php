@@ -314,6 +314,18 @@ class Utility{
         return $mtime;
     }
 
+    // 判断是否存在更新的文件，如果存在则立刻返回。
+    public static function isAnyPostNewer($time)
+    {
+        foreach (glob(MDBLOG_ROOT_PATH.'/post/*/*.md') as $_file) {
+            if (filemtime($_file) > $time)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // 根据基础信息获取文章信息
     public static function getMdInfoOfDirInfo($dirInfo)
     {
