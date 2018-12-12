@@ -35,7 +35,7 @@ a,a:active{
     text-decoration: none;
 }
 
-h1{
+h1,h2{
     margin:0;
 }
 
@@ -111,7 +111,6 @@ h1{
     position: relative;
     margin: -40px auto;
     border-radius: 20px;
-    z-index: 4;
 }
 
 .item_li .item_bg{
@@ -142,7 +141,7 @@ h1{
     top:0;
     width:100%;
     height: 100%;
-    z-index: 3;
+    z-index: 1;
     overflow: auto;
     background-color: #f4f4f4;
     -webkit-overflow-scrolling: touch;
@@ -196,7 +195,6 @@ h1{
     min-height: 19px;
     padding: 0 20px;
     text-align: right;
-    z-index: 1;
 }
 .item_showing .item_footer{
     display: none;
@@ -231,7 +229,6 @@ h1{
 }
 .item_li .item_footer .time{
     display: inline-block;
-    color: gray;
 }
 .item_footer .time time{
     display: none;
@@ -256,7 +253,6 @@ h1{
     overflow: hidden;
     cursor: pointer;
     min-height: 120px;
-    z-index: 2;
 }
 .item_li .description p{
     margin: 9px 0;
@@ -272,7 +268,6 @@ h1{
     position: relative;
     font-size: 12pt;
     padding: 0 40px 40px;
-    z-index: 3;
 }
 .item_li .content img{
     max-width: 95%;
