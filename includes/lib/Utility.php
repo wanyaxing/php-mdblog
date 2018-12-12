@@ -404,9 +404,11 @@ class Utility{
             <article class="item_li" >
                 <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
                     <div class="item_body" >
-                        <h1><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h1>
 <?php if (empty($html)): ?>
+                        <h2><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h2>
                         <div class="description"><?= '<p>'.implode('</p><p>',$mdInfo['descriptions']).'</p>' ?></div>
+<?php else: ?>
+                        <h1><span class="name"><?= $mdInfo['fTitle'] ?></span></h1>
 <?php endif ?>
                         <div class="content markdown-body"><?= $html ?></div>
                         <div class="item_footer">
