@@ -11,26 +11,26 @@
 <?php if (!MDBLOG_IS_AJAX): ?>
 <?php include __dir__ . '/header.php'; ?>
 <body>
-    <?php include __dir__ . '/top.php'; ?>
+<?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
     <main id="blog_list">
-        <?php if (!is_null($tag)): ?>
-            <nav class="nav_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
-        <?php endif ?>
+<?php if (!is_null($tag)): ?>
+        <nav class="nav_tips" ><a href="./">首页</a> &gt; <span class="tag"><?= $_GET['tag'] ?></span> </nav>
 <?php endif ?>
-        <?php foreach ($dirListInfo['currentList'] as $dirInfo): ?>
-            <?php $mdInfo = Utility::getMdInfoOfDirInfo($dirInfo); ?>
-            <?php Utility::printMdInfo($mdInfo)?>
-        <?php endforeach ?>
-        <?php if (count($dirListInfo['currentList'])==0): ?>
-            <a class="btn_loadmore" >你发现了一片荒漠，这儿啥都没有。。。</a>
-        <?php endif ?>
-        <?php if ($page * $size < $dirListInfo['countTotal']): ?>
-            <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
-        <?php endif ?>
+<?php endif ?>
+<?php foreach ($dirListInfo['currentList'] as $dirInfo): ?>
+<?php $mdInfo = Utility::getMdInfoOfDirInfo($dirInfo); ?>
+<?php Utility::printMdInfo($mdInfo)?>
+<?php endforeach ?>
+<?php if (count($dirListInfo['currentList'])==0): ?>
+        <a class="btn_loadmore" >你发现了一片荒漠，这儿啥都没有。。。</a>
+<?php endif ?>
+<?php if ($page * $size < $dirListInfo['countTotal']): ?>
+        <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
+<?php endif ?>
 <?php if (!MDBLOG_IS_AJAX): ?>
     </main>
-    <?php include __dir__ . '/side.php'; ?>
+<?php include __dir__ . '/side.php'; ?>
     </div>
 <?php include __dir__ . '/footer.php'; ?>
 </body>

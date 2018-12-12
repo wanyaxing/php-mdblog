@@ -9,7 +9,7 @@
         Utility::exit404();
     }
 
-    $html   = Utility::getHtmlOfMdInfo($mdInfo);
+    $html  = Utility::getHtmlOfMdInfo($mdInfo);
 
     $html .= sprintf('<p class="auth_info" title="转载注明来源即可">原文来自%s：<a href="%s">%s</a></p>',MDBLOG_TITLE,$mdInfo['url'],$mdInfo['url']);
 
@@ -24,12 +24,12 @@
 ?>
 <?php include __dir__ . '/header.php'; ?>
 <body>
-    <?php include __dir__ . '/top.php'; ?>
+<?php include __dir__ . '/top.php'; ?>
     <div id="home_body">
         <main id="blog_detail">
-            <?php Utility::printMdInfo($mdInfo,$html)?>
+<?php Utility::printMdInfo($mdInfo,$html)?>
         </main>
-        <?php include __dir__ . '/side.php'; ?>
+<?php include __dir__ . '/side.php'; ?>
     </div>
 <?php include __dir__ . '/footer.php'; ?>
 </body>

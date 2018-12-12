@@ -405,24 +405,24 @@ class Utility{
                 <div class="item_bg" id="item_<?= md5($mdInfo['link'])  ?>">
                     <div class="item_body" >
                         <h1><a class="name" href="<?= $mdInfo['link'] ?>"><?= $mdInfo['fTitle'] ?></a></h1>
-                        <?php if (empty($html)): ?>
+<?php if (empty($html)): ?>
                         <div class="description"><?= '<p>'.implode('</p><p>',$mdInfo['descriptions']).'</p>' ?></div>
-                        <?php endif ?>
+<?php endif ?>
                         <div class="content markdown-body"><?= $html ?></div>
                         <div class="item_footer">
                             <div class="tags">
-                                <?php foreach ($mdInfo['fTags'] as $tag): ?>
-                                    <a href="./?tag=<?= urlencode($tag) ?>"><?= $tag ?></a>
-                                <?php endforeach ?>
+<?php foreach ($mdInfo['fTags'] as $tag): ?>
+                                <a href="./?tag=<?= urlencode($tag) ?>"><?= $tag ?></a>
+<?php endforeach ?>
                             </div>
                             <span class="view">
                                 <span>阅读数：<span class="md_pv" f_time="<?= $mdInfo['fTime'] ?>"></span></span>
                             </span>
                             <div class="time">
                                 <time class="time_created" pubdate="<?= date(DATE_ATOM,$mdInfo['fTimeCreated']) ?>">发表于：<?= Utility::timetostr($mdInfo['fTimeCreated']) ?></time>
-                                <?php if ($mdInfo['fTimeModified'] != $mdInfo['fTimeCreated']): ?>
-                                    <time class="time_modified" datetime="<?= date(DATE_ATOM,$mdInfo['fTimeModified']) ?>">编辑于：<?= Utility::timetostr($mdInfo['fTimeModified']) ?></time>
-                                <?php endif ?>
+<?php if ($mdInfo['fTimeModified'] != $mdInfo['fTimeCreated']): ?>
+                                <time class="time_modified" datetime="<?= date(DATE_ATOM,$mdInfo['fTimeModified']) ?>">编辑于：<?= Utility::timetostr($mdInfo['fTimeModified']) ?></time>
+<?php endif ?>
                             </div>
                         </div>
                         <div class="btn_close">X</div>
