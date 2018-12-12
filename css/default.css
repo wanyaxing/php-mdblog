@@ -111,6 +111,7 @@ h1{
     position: relative;
     margin: -40px auto;
     border-radius: 20px;
+    z-index: 4;
 }
 
 .item_li .item_bg{
