@@ -113,6 +113,10 @@ h1,h2{
     border-radius: 20px;
 }
 
+.item_li .name{
+    color:#4a4a49;
+}
+
 .item_li .item_bg{
     position: relative;
     /*height: 100%;*/
