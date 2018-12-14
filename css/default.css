@@ -360,11 +360,14 @@ h1,h2{
         background-color: #f4f4f4;
         min-height: 100vh;
     }
-    #side_list.side_show{
-        left: 0;
-    }
     .item_li .content{
         padding: 0 20px;
+    }
+    .side_show #side_list{
+        left: 0;
+    }
+    .side_show #blog_detail{
+        height: 100vh;
     }
 }
 

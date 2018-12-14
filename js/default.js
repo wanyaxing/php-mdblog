@@ -83,47 +83,6 @@ ready(function(){
         });
     }
 
-    // ---------------------全站配置-----------------------------
-    document.getElementById('btn_sideshow').onclick = function(){
-        var el = document.getElementById('side_list');
-        if (el.classList) {
-            el.classList.toggle('side_show');
-        } else {
-            var classes = el.className.split(' ');
-            var existingIndex = -1;
-            for (var i = classes.length; i--;) {
-                if (classes[i] === 'side_show')
-                    existingIndex = i;
-            }
-
-            if (existingIndex >= 0)
-                classes.splice(existingIndex, 1);
-            else
-                classes.push('side_show');
-
-            el.className = classes.join(' ');
-        }
-    };
-
-
-    window.onpopstate = function(event) {
-        window.history.go(0);
-    }
-
-    hljs.initHighlightingOnLoad();
-
-    // ---------------------详情页-----------------------------
-    if (document.getElementById('blog_detail'))
-    {
-        updateMdView(document.getElementById('blog_detail'));//详情页 pv + 1
-    }
-    // ---------------------列表页-----------------------------
-    if (!document.getElementById('blog_list'))
-    {
-        return false;
-    }
-    updateBlogView();//整站 pv + 1
-
     function hasClass(el,className)
     {
         if (el.classList)
@@ -151,6 +110,38 @@ ready(function(){
         else
             el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     }
+
+
+    // ---------------------全站配置-----------------------------
+    document.getElementById('btn_sideshow').onclick = function(){
+        if (hasClass(document.body,'side_show'))
+        {
+            removeClass(document.body,'side_show');
+        }
+        else
+        {
+            addClass(document.body,'side_show');
+        }
+    };
+
+
+    window.onpopstate = function(event) {
+        window.history.go(0);
+    }
+
+    hljs.initHighlightingOnLoad();
+
+    // ---------------------详情页-----------------------------
+    if (document.getElementById('blog_detail'))
+    {
+        updateMdView(document.getElementById('blog_detail'));//详情页 pv + 1
+    }
+    // ---------------------列表页-----------------------------
+    if (!document.getElementById('blog_list'))
+    {
+        return false;
+    }
+    updateBlogView();//整站 pv + 1
 
     function closest(el,className)
     {
