@@ -1,12 +1,11 @@
 <?php
-    $size     = MDBLOG_PAGE_SIZE;
+$size     = MDBLOG_PAGE_SIZE;
 
-    $dirListInfo = Utility::getDirListInfo($page,$size,$tag);
+$dirListInfo = Utility::getDirListInfo($page, $size, $tag);
 
-    if (!is_null($tag))
-    {
-        $title = $tag.' 的搜索结果';
-    }
+if (!is_null($tag)) {
+    $title = $tag.' 的搜索结果';
+}
 ?>
 <?php if (!MDBLOG_IS_AJAX): ?>
 <?php include __dir__ . '/header.php'; ?>
@@ -26,7 +25,7 @@
         <a class="btn_loadmore" >你发现了一片荒漠，这儿啥都没有。。。</a>
 <?php endif ?>
 <?php if ($page * $size < $dirListInfo['countTotal']): ?>
-        <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET,array('page'=>$page+1))) ?>">点我加载更多</a>
+        <a class="btn_loadmore" href="<?= './?'.http_build_query(array_merge($_GET, array('page'=>$page+1))) ?>">点我加载更多</a>
 <?php endif ?>
 <?php if (!MDBLOG_IS_AJAX): ?>
     </main>
