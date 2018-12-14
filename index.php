@@ -41,7 +41,10 @@ date_default_timezone_set('Asia/Shanghai');//设定时区
     }
 
 
-    define('MDBLOG_IS_AJAX',isset($_GET['is_ajax']));
+    $getallheaders = getallheaders();
+
+    define('MDBLOG_IS_AJAX',isset($getallheaders['X-Pjax']));
+
 
     if (!defined('MDBLOG_CACHE_DIR'))
     {

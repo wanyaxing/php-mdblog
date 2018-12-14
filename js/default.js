@@ -27,6 +27,10 @@ ready(function(){
         {
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         }
+        else
+        {
+            request.setRequestHeader('X-Pjax', '1');
+        }
 
         request.onreadystatechange = function()
         {
@@ -209,7 +213,7 @@ ready(function(){
         el.innerHTML = '加载中...';
 
         var link = el.getAttribute('href');
-        xhrGet(link+(link.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
+        xhrGet(link,function(response){
             el.style.display = 'none';
             if (typeof _hmt != 'undefined'){_hmt.push(['_trackPageview', link]);}
             updateBlogView();//整站 pv +1
@@ -294,7 +298,7 @@ ready(function(){
         }
         if (!hasClass(_content,'content_load'))
         {
-            xhrGet(state.url+(state.url.indexOf('?')>0?'&':'?')+'is_ajax=1',function(response){
+            xhrGet(state.url,function(response){
                 _content.innerHTML = response;
                 addClass(_content,'content_load');
                 forEach(_content.querySelectorAll('pre code'),function(i, block) {
