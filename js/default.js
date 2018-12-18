@@ -10,8 +10,19 @@ function ready(fn) {
         });
     }
 }
+function afterLoad(fn) {
+    if (document.readyState == 'complete'){
+        fn();
+    } else if (window.addEventListener) {
+        window.addEventListener('load', fn, false);
+    } else if (window.attachEvent) {
+        window.attachEvent('onload', fn);
+    } else {
+        window.onload = fn;
+    }
+}
 
-ready(function(){
+afterLoad(function(){
 
     function forEach(array, fn)
     {
