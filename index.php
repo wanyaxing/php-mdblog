@@ -80,7 +80,7 @@ if (!defined('MDBLOG_CACHE_DIR')) {
             }
         } else {
             // 如果有更新的文件，则需要重载。
-            $isNeedReload = Utility::isAnyPostNewer(filemtime($cacheFile));
+            $isNeedReload = Utility::isLastPostNewer(filemtime($cacheFile));
         }
 
         // // 使用缓存时，启用缓存锁功能，可用于防止缓存并发，小型站点可以不用开启，几乎用不到。
