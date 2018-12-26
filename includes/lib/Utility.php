@@ -21,6 +21,8 @@ class Utility
     {
         if ($p_time===null || $p_time=='time()') {
             return time();
+        } else if (preg_match('/^[a-zA-Z]+$/',$p_time)) {
+            return null;
         } else {
             $time = null;
             if (static::is_int($p_time) && strlen($p_time)==13) {
