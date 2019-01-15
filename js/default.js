@@ -64,6 +64,7 @@ afterLoad(function(){
     }
     function xhrGet(link,callback)
     {
+        link += (link.indexOf('?')>0?'&':'?')+'is_ajax=1';
         xhrRequest('GET',link,null,callback);
     }
     function xhrPost(link,data,callback)

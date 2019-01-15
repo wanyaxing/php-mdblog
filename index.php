@@ -38,9 +38,7 @@ switch ($requestActions[0]) {
 }
 
 
-$getallheaders = getallheaders();
-
-define('MDBLOG_IS_AJAX', isset($getallheaders['X-Pjax']));
+define('MDBLOG_IS_AJAX', isset($_GET['is_ajax']));
 
 
 if (!defined('MDBLOG_CACHE_DIR')) {
@@ -137,11 +135,11 @@ if (!defined('MDBLOG_CACHE_DIR')) {
     }
 
     // 输出200状态的数据，并设定头信息。
-    header('Cache-Control:public');
+    header('Cache-Control:no-cache');
     header('Last-Modified:'.$eLastModified);
     header('Keep-Alive:timeout=5, max=5');//设定过期时间，禁止只读缓存
-    // header('Expires:'.gmdate('D, d M Y H:i:s \G\M\T', $_time+3600));
-    header('Expires:'.gmdate('D, d M Y H:i:s GMT', $cachemtime+5));
+    // header('Expires:'.gmdate('D, d M Y H:i:s \G\M\T', $cachemtime+3600));
+    // header('Expires:'.gmdate('D, d M Y H:i:s \G\M\T', $cachemtime+5));
     header('Etag:'.$etag);
 
     // 如果支持压缩，则压缩输出。
