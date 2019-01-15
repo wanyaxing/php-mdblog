@@ -290,9 +290,10 @@ class Utility
             foreach (glob($_path.'/*.md') as $_file) {
                 if (filemtime($_file) > $time) {
                     return true;
+                } else {
+                    return false;
                 }
             }
-            return true;
         }
         return false;
     }
