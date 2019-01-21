@@ -141,12 +141,13 @@ afterLoad(function(){
         window.history.go(0);
     }
 
-    hljs.initHighlightingOnLoad();
-
     // ---------------------详情页-----------------------------
     if (document.getElementById('blog_detail'))
     {
         updateMdView(document.getElementById('blog_detail'));//详情页 pv + 1
+        forEach(document.querySelectorAll('pre code'),function(i, block) {
+                    hljs.highlightBlock(block);
+                })
     }
     // ---------------------列表页-----------------------------
     if (!document.getElementById('blog_list'))

@@ -4,4 +4,4 @@
         <span>访问量：<span class="blog_pv"></span></span>
     </div>
 </footer>
-<script type="text/javascript" src="./js/default.mix.js?v=0115.1"></script>
+<script type="text/javascript" src="./js/default.mix.js?v=0121.1"></script>
