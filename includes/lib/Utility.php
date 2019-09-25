@@ -345,7 +345,7 @@ class Utility
             $str = $matches[1] . $imgFileUrl . $matches[3] ;
 
             // 支持@2x @3x图片的显示设定
-            $xNumber = preg_replace('/.*\/[^\/]*\@(\d)x\.\w/', '$1', $matches[2]);
+            $xNumber = intval(preg_replace('/.*\/[^\/]*\@(\d)x\.\w/', '$1', $matches[2]));
             if ($xNumber > 0) {
                 list($width, $height, $type, $attr) = getimagesize($imgFilePath);
                 $str .= sprintf(' width="%dpx"', $width/$xNumber);
